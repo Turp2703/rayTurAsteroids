@@ -4,7 +4,9 @@
 
 class Ship{
     public:
-        Ship(int xpos, int ypos, float size);
+        Ship(int xPos, int yPos, float size);
+        void update();
+        void draw();
     private:
         const int k_maxSpeed = 5; // 5
         const float k_acceleration = 0.2f; // 0.2f

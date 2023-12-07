@@ -7,7 +7,10 @@
     #include <emscripten/emscripten.h>
 #endif
 
-Game::Game() { }
+Game::Game()
+    : player(k_screenWidth / 2, k_screenHeight / 2, 20.0f){
+    /**/
+}
 
 void UpdateDrawFrame(void* arg){
     Game* instance = static_cast<Game*>(arg);
@@ -28,13 +31,13 @@ void Game::init(const char* p_title){
 }
 
 void Game::update(){
-    
+    player.update();
 }
 
 void Game::draw(){
-    ClearBackground(RAYWHITE);
+    ClearBackground(BLACK);
     DrawFPS(10, 10);
-    DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+    player.draw();
 }
 
 void Game::shutdown(){

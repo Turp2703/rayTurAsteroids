@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ship.h"
+
 class Game{
     public:
         Game();
@@ -8,4 +10,5 @@ class Game{
         void draw();
     private:
         void shutdown();
+        Ship player;
 };
