@@ -1,5 +1,4 @@
 #include "ship.h"
-#include "globals.h"
 
 #include "raylib.h"
 #include "raymath.h"
@@ -7,10 +6,12 @@
 #include <iostream>
 #include <cmath>
 
-Ship::Ship(int p_xPos, int p_yPos, float p_size)
-    : m_size(p_size){
-    m_position.x = (float)p_xPos; 
-    m_position.y = (float)p_yPos; 
+Ship::Ship(int p_screenWidth, int p_screenHeight){
+    m_position.x = p_screenWidth  / 2; 
+    m_position.y = p_screenHeight / 2; 
+    m_size = 20.0f;
+    m_horizontalLimit = p_screenWidth  + m_size * 1.05f;
+    m_verticalLimit   = p_screenHeight + m_size * 1.05f;
     m_speed = 0.0f;
     m_acceleration = 0.0f;
     m_angle = 0.0f;
@@ -56,14 +57,10 @@ void Ship::update(){
     m_radAngle = m_angle * DEG2RAD;
     Vector2 endPos = {m_position.x + cos(m_radAngle) * m_speed, m_position.y + sin(m_radAngle) * m_speed};
     // Teleport
-    if      (endPos.x > k_screenWidth + m_size * 1.1f)
-        endPos.x -= k_screenWidth  + m_size * 2 * 1.1f;
-    else if (endPos.x < -(m_size * 1.1f))
-        endPos.x += k_screenWidth  + m_size * 2 * 1.1f;
-    if      (endPos.y > k_screenHeight  + m_size * 1.1f)
-        endPos.y -= k_screenHeight + m_size * 2 * 1.1f;
-    else if (endPos.y < -(m_size * 1.1f))
-        endPos.y += k_screenHeight + m_size * 2 * 1.1f;
+    if      (endPos.x > m_horizontalLimit)  endPos.x -= m_horizontalLimit + m_size;
+    else if (endPos.x < -(m_size * 1.05f))  endPos.x += m_horizontalLimit + m_size;
+    if      (endPos.y > m_verticalLimit)    endPos.y -= m_verticalLimit   + m_size;
+    else if (endPos.y < -(m_size * 1.05f))  endPos.y += m_verticalLimit   + m_size;
     // Change pos
     m_position = endPos;
 }

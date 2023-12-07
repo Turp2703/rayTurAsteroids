@@ -1,5 +1,4 @@
 #include "game.h"
-#include "globals.h"
 
 #include "raylib.h"
 
@@ -8,7 +7,7 @@
 #endif
 
 Game::Game()
-    : player(k_screenWidth / 2, k_screenHeight / 2, 20.0f){
+    : player(k_screenWidth, k_screenHeight){
     /**/
 }
 
@@ -36,7 +35,7 @@ void Game::update(){
 
 void Game::draw(){
     ClearBackground(BLACK);
-    DrawFPS(10, 10);
+    // DrawFPS(10, 10);
     player.draw();
 }
 

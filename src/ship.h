@@ -4,7 +4,7 @@
 
 class Ship{
     public:
-        Ship(int xPos, int yPos, float size);
+        Ship(int p_screenWidth, int p_screenHeight);
         void update();
         void draw();
     private:
@@ -12,9 +12,11 @@ class Ship{
         const float k_acceleration = 0.2f; // 0.2f
         const float k_friction = 0.75f; // 0.75f
         Vector2 m_position;
+        float m_size;
+        int m_horizontalLimit;
+        int m_verticalLimit;
         float m_speed;
         float m_acceleration;
         float m_angle;
         float m_radAngle;
-        float m_size;
 };
