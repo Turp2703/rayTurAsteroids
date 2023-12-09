@@ -15,5 +15,5 @@ class Laser : public Projectile{
     private:
         const int k_maxLifeTime = 1; // 1
         const int k_speed = 15; // 15
-        const Vector2 k_size = {3, 10}; // 3,10
+        const int k_size = 3; // 3
 };

@@ -21,8 +21,8 @@ void LaserManager::draw(){
     for(Laser laser : m_lasers)
         laser.draw();
     
-    // for(unsigned int i = 0; i < m_lasers.size(); i++)
-        // DrawCircle(10.0f, i*10.0f, 3.0f, GREEN);
+    for(unsigned int i = 0; i < m_lasers.size(); i++)
+        DrawCircle(10.0f, i*10.0f, 3.0f, GREEN);
 }
 
 void LaserManager::spawnLaser(Vector2 p_pos, float p_radAngle, int p_horLimit, int p_verLimit){
