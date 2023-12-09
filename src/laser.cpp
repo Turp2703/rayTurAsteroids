@@ -4,27 +4,24 @@
 
 #include <cmath>
 
-Laser::Laser(Vector2 p_pos, float p_radAngle, int p_horLimit, int p_verLimit){
-    m_alive = true;
-    m_startTime = static_cast<float>(GetTime());
-    m_lifeTime = 0.0f;
-    m_position = p_pos;
-    m_radAngle = p_radAngle;
-    m_horizontalLimit = p_horLimit;
-    m_verticalLimit   = p_verLimit;
+// Constructor
+Laser::Laser(Vector2 p_pos, float p_radAngle, int p_horLimit, int p_verLimit)
+    : Projectile(p_pos, p_radAngle, p_horLimit, p_verLimit)
+{
+    /* */
 }
 
-Laser& Laser::operator=(const Laser& other){
+// Copy Constructor
+Laser::Laser(const Laser& other)
+    : Projectile(other) 
+{
+    /* */
+}
+
+// Move Assignment Operator
+Laser& Laser::operator=(Laser&& other) noexcept {
     if (this != &other)
-    {
-        m_alive = other.m_alive;
-        m_startTime = other.m_startTime;
-        m_lifeTime = other.m_lifeTime;
-        m_position = other.m_position;
-        m_radAngle = other.m_radAngle;
-        m_horizontalLimit = other.m_horizontalLimit;
-        m_verticalLimit = other.m_verticalLimit;
-    }
+        Projectile::operator=(std::move(other));
     return *this;
 }
 

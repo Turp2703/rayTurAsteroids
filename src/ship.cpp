@@ -21,7 +21,7 @@ Ship::Ship(int p_screenWidth, int p_screenHeight, LaserManager& p_laserManager)
     m_radAngle = 0.0f;
 }
 
-///// CORRECT BACKWARDS ANGLE
+
 void Ship::update(){
     // Change angle
         // bool aDown = IsKeyDown(KEY_LEFT), dDown = IsKeyDown(KEY_RIGHT);

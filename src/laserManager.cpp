@@ -17,6 +17,7 @@ void LaserManager::update(){
 }
 
 void LaserManager::draw(){
+    // for(std::vector<Laser>::iterator it = m_lasers.begin(); it != m_lasers.end() ; it++) it->draw();
     for(Laser laser : m_lasers)
         laser.draw();
     
