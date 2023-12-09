@@ -11,8 +11,6 @@ class Projectile{
         virtual bool isAlive() = 0;
     protected:
         bool m_alive;
-        float m_startTime;
-        float m_lifeTime;
         Vector2 m_position;
         float m_radAngle;
         int m_horizontalLimit;

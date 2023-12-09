@@ -4,6 +4,7 @@
 
 #include "ship.h"
 #include "laserManager.h"
+#include "flameManager.h"
 #include "asteroid.h"
 
 class Game{
@@ -18,5 +19,6 @@ class Game{
         void shutdown();
         Ship player;
         LaserManager laserManager;
+        FlameManager flameManager;
         Asteroid ast1;
 };

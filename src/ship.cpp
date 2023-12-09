@@ -8,8 +8,8 @@
 #include <iostream>
 #include <cmath>
 
-Ship::Ship(int p_screenWidth, int p_screenHeight, LaserManager& p_laserManager)
-    : m_laserManager(p_laserManager){
+Ship::Ship(int p_screenWidth, int p_screenHeight, LaserManager& p_laserManager, FlameManager& p_flameManager)
+    : m_laserManager(p_laserManager), m_flameManager(p_flameManager){
     m_position.x = p_screenWidth  / 2; 
     m_position.y = p_screenHeight / 2; 
     m_size = 10.0f;
@@ -26,10 +26,18 @@ void Ship::update(){
     // Change angle
         // bool aDown = IsKeyDown(KEY_LEFT), dDown = IsKeyDown(KEY_RIGHT);
     bool aDown = IsKeyDown(KEY_A), dDown = IsKeyDown(KEY_D);
-    if     ( aDown && !dDown)
-        m_angle -= 3.0f;
-    else if(!aDown && dDown) 
-        m_angle += 3.0f;
+    if     ( aDown && !dDown){
+        if(m_speed >= 0)
+            m_angle -= 3.0f;
+        else
+            m_angle += 3.0f;
+    }
+    else if(!aDown && dDown){
+        if(m_speed >= 0)
+            m_angle += 3.0f;
+        else
+            m_angle -= 3.0f;
+    }
     m_angle = (int)m_angle % 360; // Map to 0-359 range
     
     // Change acceleration
@@ -60,10 +68,8 @@ void Ship::update(){
     
     // Calculate pos
     m_radAngle = m_angle * DEG2RAD;
-    Vector2 endPos = {
-        static_cast<float>(m_position.x + cos(m_radAngle) * m_speed),
-        static_cast<float>(m_position.y + sin(m_radAngle) * m_speed)
-    };
+    Vector2 endPos = { static_cast<float>(m_position.x + cos(m_radAngle) * m_speed) ,
+                       static_cast<float>(m_position.y + sin(m_radAngle) * m_speed) };
     // Teleport
     if      (endPos.x > m_horizontalLimit)  endPos.x -= m_horizontalLimit + m_size;
     else if (endPos.x < -(m_size * 1.05f))  endPos.x += m_horizontalLimit + m_size;
@@ -75,6 +81,9 @@ void Ship::update(){
     // Shoot Laser
     if(IsKeyPressed(KEY_J))
         m_laserManager.spawnLaser(m_position, m_radAngle, m_horizontalLimit, m_verticalLimit);
+    // Shoot Flames
+    if(IsKeyDown(KEY_K))
+        m_flameManager.spawnFlame(m_position, m_radAngle, m_horizontalLimit, m_verticalLimit);
 }
 
 void Ship::draw(){
@@ -90,5 +99,5 @@ void Ship::draw(){
     // Vector2 endPos = {m_position.x + cos(radAngle) * length, m_position.y + sin(radAngle) * length};
     // DrawLineEx(m_position, endPos, 3.0f, GREEN);
     // DrawCircleV(m_position, 3.0f, GREEN);
-    // DrawText(std::to_string(m_angle).c_str(), 10, 10, 20, WHITE);
+    // DrawText(std::to_string(m_speed).c_str(), 10, 10, 20, WHITE);
 }

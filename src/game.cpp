@@ -7,7 +7,7 @@
 #endif
 
 Game::Game()
-    : player(k_screenWidth, k_screenHeight, laserManager)
+    : player(k_screenWidth, k_screenHeight, laserManager, flameManager)
     , ast1(k_screenWidth, k_screenHeight){
     /**/
 }
@@ -33,6 +33,7 @@ void Game::init(const char* p_title){
 void Game::update(){
     player.update();
     laserManager.update();
+    flameManager.update();
     ast1.update();
 }
 
@@ -41,6 +42,7 @@ void Game::draw(){
     // DrawFPS(10, 10);
     player.draw();
     laserManager.draw();
+    flameManager.draw();
     ast1.draw();
 }
 
