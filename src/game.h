@@ -1,6 +1,10 @@
 #pragma once
 
+#include <vector>
+
 #include "ship.h"
+#include "laserManager.h"
+#include "asteroid.h"
 
 class Game{
     public:
@@ -13,4 +17,6 @@ class Game{
         const int k_screenHeight = 600;
         void shutdown();
         Ship player;
+        LaserManager laserManager;
+        Asteroid ast1;
 };

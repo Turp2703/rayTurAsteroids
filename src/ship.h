@@ -1,10 +1,12 @@
 #pragma once
 
+#include "laserManager.h"
+
 #include "raylib.h"
 
 class Ship{
     public:
-        Ship(int p_screenWidth, int p_screenHeight);
+        Ship(int p_screenWidth, int p_screenHeight, LaserManager&);
         void update();
         void draw();
     private:
@@ -19,4 +21,5 @@ class Ship{
         float m_acceleration;
         float m_angle;
         float m_radAngle;
+        LaserManager& m_laserManager;
 };

@@ -1,15 +1,18 @@
 #include "ship.h"
 
+#include "laserManager.h"
+
 #include "raylib.h"
 #include "raymath.h"
 
 #include <iostream>
 #include <cmath>
 
-Ship::Ship(int p_screenWidth, int p_screenHeight){
+Ship::Ship(int p_screenWidth, int p_screenHeight, LaserManager& p_laserManager)
+    : m_laserManager(p_laserManager){
     m_position.x = p_screenWidth  / 2; 
     m_position.y = p_screenHeight / 2; 
-    m_size = 20.0f;
+    m_size = 10.0f;
     m_horizontalLimit = p_screenWidth  + m_size * 1.05f;
     m_verticalLimit   = p_screenHeight + m_size * 1.05f;
     m_speed = 0.0f;
@@ -18,6 +21,7 @@ Ship::Ship(int p_screenWidth, int p_screenHeight){
     m_radAngle = 0.0f;
 }
 
+///// CORRECT BACKWARDS ANGLE
 void Ship::update(){
     // Change angle
         // bool aDown = IsKeyDown(KEY_LEFT), dDown = IsKeyDown(KEY_RIGHT);
@@ -53,9 +57,13 @@ void Ship::update(){
         if(m_speed > -0.2f && m_speed < 0.2f) 
             m_speed = 0.0f;
     }
+    
     // Calculate pos
     m_radAngle = m_angle * DEG2RAD;
-    Vector2 endPos = {m_position.x + cos(m_radAngle) * m_speed, m_position.y + sin(m_radAngle) * m_speed};
+    Vector2 endPos = {
+        static_cast<float>(m_position.x + cos(m_radAngle) * m_speed),
+        static_cast<float>(m_position.y + sin(m_radAngle) * m_speed)
+    };
     // Teleport
     if      (endPos.x > m_horizontalLimit)  endPos.x -= m_horizontalLimit + m_size;
     else if (endPos.x < -(m_size * 1.05f))  endPos.x += m_horizontalLimit + m_size;
@@ -63,6 +71,10 @@ void Ship::update(){
     else if (endPos.y < -(m_size * 1.05f))  endPos.y += m_verticalLimit   + m_size;
     // Change pos
     m_position = endPos;
+    
+    // Shoot Laser
+    if(IsKeyPressed(KEY_J))
+        m_laserManager.spawnLaser(m_position, m_radAngle, m_horizontalLimit, m_verticalLimit);
 }
 
 void Ship::draw(){
