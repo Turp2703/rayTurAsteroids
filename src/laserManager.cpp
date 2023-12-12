@@ -28,5 +28,6 @@ void LaserManager::draw(){
 }
 
 void LaserManager::spawnLaser(Vector2 p_pos, float p_radAngle, int p_horLimit, int p_verLimit){
-    m_lasers.push_back(Laser(p_pos, p_radAngle, p_horLimit, p_verLimit));
+    if(m_lasers.size() < 3)
+        m_lasers.push_back(Laser(p_pos, p_radAngle, p_horLimit, p_verLimit));
 }
