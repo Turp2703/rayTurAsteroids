@@ -6,9 +6,9 @@
 
 class Laser : public Projectile{
     public:
-        Laser(Vector2 p_pos, float p_radAngle, int p_horLimit, int p_verLimit);
-        Laser(const Laser& other);
-        Laser& operator=(Laser&& other) noexcept;
+        Laser(Vector2, float, int, int);
+        Laser(const Laser&);
+        Laser& operator=(Laser&&) noexcept;
         void update();
         void draw();
         bool isAlive();

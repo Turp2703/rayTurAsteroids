@@ -2,12 +2,13 @@
 
 #include "laserManager.h"
 #include "flameManager.h"
+#include "shockwaveManager.h"
 
 #include "raylib.h"
 
 class Ship{
     public:
-        Ship(int p_screenWidth, int p_screenHeight, LaserManager&, FlameManager&);
+        Ship(int, int, LaserManager&, FlameManager&, ShockwaveManager&);
         void update();
         void draw();
     private:
@@ -24,4 +25,5 @@ class Ship{
         float m_radAngle;
         LaserManager& m_laserManager;
         FlameManager& m_flameManager;
+        ShockwaveManager& m_shockwaveManager;
 };

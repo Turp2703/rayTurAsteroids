@@ -8,8 +8,9 @@
 #include <iostream>
 #include <cmath>
 
-Ship::Ship(int p_screenWidth, int p_screenHeight, LaserManager& p_laserManager, FlameManager& p_flameManager)
-    : m_laserManager(p_laserManager), m_flameManager(p_flameManager){
+Ship::Ship(int p_screenWidth, int p_screenHeight
+         , LaserManager& p_laserManager, FlameManager& p_flameManager, ShockwaveManager& p_shockwaveManager)
+    : m_laserManager(p_laserManager), m_flameManager(p_flameManager), m_shockwaveManager(p_shockwaveManager){
     m_position.x = p_screenWidth  / 2; 
     m_position.y = p_screenHeight / 2; 
     m_size = 10.0f;
@@ -78,12 +79,13 @@ void Ship::update(){
     // Change pos
     m_position = endPos;
     
-    // Shoot Laser
+    // Attacks
     if(IsKeyPressed(KEY_J))
         m_laserManager.spawnLaser(m_position, m_radAngle, m_horizontalLimit, m_verticalLimit);
-    // Shoot Flames
     if(IsKeyDown(KEY_K))
         m_flameManager.spawnFlame(m_position, m_radAngle, m_horizontalLimit, m_verticalLimit);
+    if(IsKeyPressed(KEY_L))
+        m_shockwaveManager.spawnShockwave(m_position, m_horizontalLimit, m_verticalLimit);
 }
 
 void Ship::draw(){

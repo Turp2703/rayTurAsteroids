@@ -6,9 +6,9 @@
 
 class Flame : public Projectile{
     public:
-        Flame(Vector2 p_pos, float p_radAngle, float p_speed, float p_size, int p_horLimit, int p_verLimit);
-        Flame(const Flame& other);
-        Flame& operator=(Flame&& other) noexcept;
+        Flame(Vector2, float, float, float, int, int);
+        Flame(const Flame&);
+        Flame& operator=(Flame&&) noexcept;
         void update();
         void draw();
         bool isAlive();

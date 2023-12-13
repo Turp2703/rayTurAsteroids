@@ -4,7 +4,7 @@
 
 class Asteroid{
     public:
-        Asteroid(int p_screenWidth, int p_screenHeight);
+        Asteroid(int, int);
         void update();
         void draw();
     private:

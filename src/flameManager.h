@@ -11,7 +11,7 @@ class FlameManager{
         FlameManager();
         void update();
         void draw();
-        void spawnFlame(Vector2 p_pos, float p_angle, int p_horLimit, int p_verLimit);
+        void spawnFlame(Vector2, float, int, int);
         //checkCollisions(std::vector<Asteroid>& asteroids);
     private:
         const int k_minSpeed = 2; // 2

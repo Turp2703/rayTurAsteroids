@@ -5,12 +5,13 @@
 #include "ship.h"
 #include "laserManager.h"
 #include "flameManager.h"
+#include "shockwaveManager.h"
 #include "asteroid.h"
 
 class Game{
     public:
         Game();
-        void init(const char* p_title);
+        void init(const char*);
         void update();
         void draw();
     private:
@@ -20,5 +21,6 @@ class Game{
         Ship player;
         LaserManager laserManager;
         FlameManager flameManager;
+        ShockwaveManager shockwaveManager;
         Asteroid ast1;
 };
