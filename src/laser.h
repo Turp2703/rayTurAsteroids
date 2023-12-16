@@ -12,10 +12,13 @@ class Laser : public Projectile{
         void update();
         void draw();
         bool isAlive();
+        Rectangle getHitBox();
+        void destroy();
     private:
         const int k_maxLifeTime = 1; // 1
         const int k_speed = 15; // 15
         const int k_size = 3; // 3
         float m_startTime;
         float m_lifeTime;
+        Vector2 m_endPos;
 };

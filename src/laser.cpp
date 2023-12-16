@@ -37,27 +37,38 @@ void Laser::update(){
     m_alive = m_lifeTime < k_maxLifeTime;
     
     // Calculate pos
-    Vector2 endPos = {
+    m_endPos = {
         static_cast<float>(m_position.x + cos(m_radAngle) * k_speed),
         static_cast<float>(m_position.y + sin(m_radAngle) * k_speed)
     };
     // Teleport
-    if      (endPos.x > m_horizontalLimit)  endPos.x -= m_horizontalLimit;
-    else if (endPos.x < 0)                  endPos.x += m_horizontalLimit;
-    if      (endPos.y > m_verticalLimit)    endPos.y -= m_verticalLimit;
-    else if (endPos.y < 0)                  endPos.y += m_verticalLimit;
+    if      (m_endPos.x > m_horizontalLimit)  m_endPos.x -= m_horizontalLimit;
+    else if (m_endPos.x < 0)                  m_endPos.x += m_horizontalLimit;
+    if      (m_endPos.y > m_verticalLimit)    m_endPos.y -= m_verticalLimit;
+    else if (m_endPos.y < 0)                  m_endPos.y += m_verticalLimit;
     // Change pos
-    m_position = endPos;
+    m_position = m_endPos;
 }
 
 void Laser::draw(){
-    Vector2 endPos = {
+    m_endPos = {
         static_cast<float>(m_position.x + cos(m_radAngle) * k_speed),
         static_cast<float>(m_position.y + sin(m_radAngle) * k_speed)
     };
-    DrawLineEx(m_position, endPos, k_size, RED);
+    DrawLineEx(m_position, m_endPos, k_size, RED);
+    
+    
+    DrawRectangleRec(getHitBox(), BLUE);
 }
 
 bool Laser::isAlive(){
     return m_alive;
+}
+
+Rectangle Laser::getHitBox(){
+    return {m_position.x, m_position.y, std::abs(m_endPos.x - m_position.x) + 1, std::abs(m_endPos.y - m_position.y) + 1};
+}
+
+void Laser::destroy(){
+    m_alive = false;
 }

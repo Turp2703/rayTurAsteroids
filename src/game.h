@@ -22,5 +22,6 @@ class Game{
         LaserManager laserManager;
         FlameManager flameManager;
         ShockwaveManager shockwaveManager;
-        Asteroid ast1;
+        std::vector<Asteroid> asteroids;
+        // PortalManager
 };

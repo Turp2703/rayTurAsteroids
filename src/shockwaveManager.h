@@ -16,7 +16,7 @@ class ShockwaveManager{
     private:
         const int k_charges = 3; // 3
         const int k_maxCharge = 10000; // 10000
-        const int k_chargeRecover = 50; // 50
+        const int k_chargeRecover = 25; // 25
         std::vector<Shockwave> m_shockwaves;
         int m_charges[3];
 };

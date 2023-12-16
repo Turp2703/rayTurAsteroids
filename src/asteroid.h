@@ -7,6 +7,9 @@ class Asteroid{
         Asteroid(int, int);
         void update();
         void draw();
+        Rectangle getHitBox();
+        void destroy();
+        bool isAlive();
     private:
         Vector2 m_position;
         float m_size;
@@ -15,4 +18,6 @@ class Asteroid{
         float m_speed;
         float m_angle;
         float m_radAngle;
+        Rectangle m_hitBox;
+        bool m_alive;
 };

@@ -29,7 +29,7 @@ void ShockwaveManager::draw(){
     for(Shockwave shockwave: m_shockwaves)
         shockwave.draw();
     
-    for(unsigned int i = 0; i < k_charges; i++){
+    for(int i = 0; i < k_charges; i++){
         DrawRectangle(GetScreenWidth() - 30 * (i + 2), 10, 20, m_charges[i] * 40 / 10000, SKYBLUE);
         DrawRectangleLines(GetScreenWidth() - 30 * (i + 2), 10, 20, 40, WHITE);
     }

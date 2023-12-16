@@ -8,8 +8,8 @@
 
 Game::Game()
     : player(k_screenWidth, k_screenHeight, laserManager, flameManager, shockwaveManager)
-    , ast1(k_screenWidth, k_screenHeight){
-    /**/
+{
+    asteroids.push_back(Asteroid(k_screenWidth, k_screenHeight));
 }
 
 void UpdateDrawFrame(void* arg){
@@ -35,7 +35,21 @@ void Game::update(){
     laserManager.update();
     flameManager.update();
     shockwaveManager.update();
-    ast1.update();
+    for(auto& asteroid : asteroids)
+        asteroid.update();
+    laserManager.checkCollisions(asteroids);
+    // flameManager.checkCollisions(asteroids);
+    // shockwaveManager.checkCollisions(asteroids);
+    for (auto it = asteroids.begin(); it != asteroids.end();)
+        if (!it->isAlive())
+            it = asteroids.erase(it);
+        else
+            it++;
+    
+    
+    
+    if(IsKeyPressed(KEY_P))
+        asteroids.push_back(Asteroid(k_screenWidth, k_screenHeight));
 }
 
 void Game::draw(){
@@ -45,7 +59,8 @@ void Game::draw(){
     laserManager.draw();
     flameManager.draw();
     shockwaveManager.draw();
-    ast1.draw();
+    for(auto& asteroid : asteroids)
+        asteroid.draw();
 }
 
 void Game::shutdown(){
