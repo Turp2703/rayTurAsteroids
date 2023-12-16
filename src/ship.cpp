@@ -11,6 +11,7 @@
 Ship::Ship(int p_screenWidth, int p_screenHeight
          , LaserManager& p_laserManager, FlameManager& p_flameManager, ShockwaveManager& p_shockwaveManager)
     : m_laserManager(p_laserManager), m_flameManager(p_flameManager), m_shockwaveManager(p_shockwaveManager){
+    m_alive = true;
     m_position.x = p_screenWidth  / 2; 
     m_position.y = p_screenHeight / 2; 
     m_size = 10.0f;
@@ -20,6 +21,7 @@ Ship::Ship(int p_screenWidth, int p_screenHeight
     m_acceleration = 0.0f;
     m_angle = 0.0f;
     m_radAngle = 0.0f;
+    m_hitBox = {m_position.x, m_position.y, m_size}; // X Y W H
 }
 
 
@@ -78,6 +80,8 @@ void Ship::update(){
     else if (endPos.y < -(m_size * 1.05f))  endPos.y += m_verticalLimit   + m_size;
     // Change pos
     m_position = endPos;
+    // Move HitBox
+    m_hitBox = {m_position.x, m_position.y, m_size};
     
     // Attacks
     if(IsKeyPressed(KEY_J))
@@ -96,10 +100,32 @@ void Ship::draw(){
     DrawTriangleLines(p1, p2, p3, WHITE);
     DrawCircleV(p1, 3.0f, WHITE);
     
+    DrawCircle(m_hitBox.x, m_hitBox.y, m_hitBox.z, RED);
     // float length = 30.0f;
     // float radAngle = m_angle * DEG2RAD;
     // Vector2 endPos = {m_position.x + cos(radAngle) * length, m_position.y + sin(radAngle) * length};
     // DrawLineEx(m_position, endPos, 3.0f, GREEN);
     // DrawCircleV(m_position, 3.0f, GREEN);
     // DrawText(std::to_string(m_speed).c_str(), 10, 10, 20, WHITE);
+    DrawText(std::to_string(m_alive).c_str(), 10, 10, 20, WHITE);
+}
+
+Vector3 Ship::getHitBox(){
+    return m_hitBox;
+}
+
+bool Ship::isAlive(){
+    return m_alive;
+}
+
+void Ship::kill(){
+    m_alive = false;
+}
+
+void Ship::checkCollisions(std::vector<Asteroid>& p_asteroids){
+    for(auto& asteroid : p_asteroids)
+        if(asteroid.isAlive() && CheckCollisionCircleRec({m_hitBox.x, m_hitBox.y}, m_hitBox.z, asteroid.getHitBox()))
+            kill();
+        else
+            m_alive = true;
 }

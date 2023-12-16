@@ -58,7 +58,7 @@ void Laser::draw(){
     DrawLineEx(m_position, m_endPos, k_size, RED);
     
     
-    DrawRectangleRec(getHitBox(), BLUE);
+    //DrawRectangleRec(getHitBox(), BLUE);
 }
 
 bool Laser::isAlive(){

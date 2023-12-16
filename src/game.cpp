@@ -37,12 +37,13 @@ void Game::update(){
     shockwaveManager.update();
     for(auto& asteroid : asteroids)
         asteroid.update();
+    player.checkCollisions(asteroids);
     laserManager.checkCollisions(asteroids);
     // flameManager.checkCollisions(asteroids);
     // shockwaveManager.checkCollisions(asteroids);
     for (auto it = asteroids.begin(); it != asteroids.end();)
         if (!it->isAlive())
-            it = asteroids.erase(it);
+            it = asteroids.erase(it); // check shield & metal after
         else
             it++;
     
