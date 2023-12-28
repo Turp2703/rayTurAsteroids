@@ -26,26 +26,28 @@ Ship::Ship(int p_screenWidth, int p_screenHeight
 
 
 void Ship::update(){
-    // Change angle
+    
+    // WASD Keys
         // bool aDown = IsKeyDown(KEY_LEFT), dDown = IsKeyDown(KEY_RIGHT);
-    bool aDown = IsKeyDown(KEY_A), dDown = IsKeyDown(KEY_D);
+        // bool wDown = IsKeyDown(KEY_UP), sDown = IsKeyDown(KEY_DOWN);
+    bool aDown = IsKeyDown(KEY_A), dDown = IsKeyDown(KEY_D), wDown = IsKeyDown(KEY_W), sDown = IsKeyDown(KEY_S);
+    
+    // Change angle
     if     ( aDown && !dDown){
-        if(m_speed >= 0)
-            m_angle -= 3.0f;
-        else
+        if(sDown)
             m_angle += 3.0f;
+        else
+            m_angle -= 3.0f;
     }
     else if(!aDown && dDown){
-        if(m_speed >= 0)
-            m_angle += 3.0f;
-        else
+        if(sDown)
             m_angle -= 3.0f;
+        else
+            m_angle += 3.0f;
     }
     m_angle = (int)m_angle % 360; // Map to 0-359 range
     
     // Change acceleration
-        // bool wDown = IsKeyDown(KEY_UP), sDown = IsKeyDown(KEY_DOWN);
-    bool wDown = IsKeyDown(KEY_W), sDown = IsKeyDown(KEY_S);
     if     ( wDown && !sDown)
         m_acceleration = k_acceleration;
     else if(!wDown &&  sDown) 
@@ -107,7 +109,9 @@ void Ship::draw(){
     // DrawLineEx(m_position, endPos, 3.0f, GREEN);
     // DrawCircleV(m_position, 3.0f, GREEN);
     // DrawText(std::to_string(m_speed).c_str(), 10, 10, 20, WHITE);
-    // DrawText(std::to_string(m_alive).c_str(), 10, 10, 20, WHITE);
+    
+    // Alive
+    DrawText(std::to_string(m_alive).c_str(), 10, 10, 20, WHITE);
 }
 
 Vector3 Ship::getHitBox(){
@@ -126,6 +130,7 @@ void Ship::checkCollisions(std::vector<Asteroid>& p_asteroids){
     for(auto& asteroid : p_asteroids)
         if(asteroid.isAlive() && CheckCollisionCircleRec({m_hitBox.x, m_hitBox.y}, m_hitBox.z, asteroid.getHitBox()))
             kill();
+        // testing only
         else
             m_alive = true;
 }
