@@ -1,6 +1,7 @@
 #pragma once
 
 #include "flame.h"
+#include "asteroid.h"
 
 #include "raylib.h"
 
@@ -12,7 +13,7 @@ class FlameManager{
         void update();
         void draw();
         void spawnFlame(Vector2, float, int, int);
-        //checkCollisions(std::vector<Asteroid>& asteroids);
+        void checkCollisions(std::vector<Asteroid>&);
     private:
         const int k_minSpeed = 2; // 2
         const int k_maxSpeed = 6; // 6

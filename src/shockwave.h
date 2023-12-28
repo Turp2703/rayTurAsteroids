@@ -12,6 +12,9 @@ class Shockwave : public Projectile{
         void update();
         void draw();
         bool isAlive();
+        Vector2 getPos();
+        float getRadius();
+        void destroy();
     private:
         const float k_size = 125.0f; // 125.0f
         const double k_lifeTime = 1.2f; // 1.2f

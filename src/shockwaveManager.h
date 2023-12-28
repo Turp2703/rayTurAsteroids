@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shockwave.h"
+#include "asteroid.h"
 
 #include "raylib.h"
 
@@ -12,7 +13,7 @@ class ShockwaveManager{
         void update();
         void draw();
         void spawnShockwave(Vector2, int, int);
-        //checkCollisions(std::vector<Asteroid>& asteroids);
+        void checkCollisions(std::vector<Asteroid>&);
     private:
         const int k_charges = 3; // 3
         const int k_maxCharge = 10000; // 10000

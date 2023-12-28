@@ -1,6 +1,7 @@
 #include "flameManager.h"
 
 #include "flame.h"
+#include "asteroid.h"
 
 #include "raylib.h"
 
@@ -53,4 +54,14 @@ void FlameManager::spawnFlame(Vector2 p_pos, float p_radAngle, int p_horLimit, i
         m_charge -= k_chargeConsumption;
         m_lastTime = GetTime();
     }
+}
+
+void FlameManager::checkCollisions(std::vector<Asteroid>& p_asteroids){
+    for(auto& flame : m_flames)
+        for(auto& asteroid : p_asteroids)
+            if(flame.isAlive() && asteroid.isAlive() && CheckCollisionRecs(asteroid.getHitBox(), flame.getHitBox())){
+                if(asteroid.hasMetal() && !asteroid.hasShield())
+                    asteroid.toggleMetal();
+                flame.destroy();
+            }
 }

@@ -37,7 +37,8 @@ void LaserManager::checkCollisions(std::vector<Asteroid>& p_asteroids){
     for(auto& laser : m_lasers)
         for(auto& asteroid : p_asteroids)
             if(laser.isAlive() && asteroid.isAlive() && CheckCollisionRecs(asteroid.getHitBox(), laser.getHitBox())){
-                asteroid.destroy();
+                if(!asteroid.hasMetal() && !asteroid.hasShield())
+                    asteroid.destroy();
                 laser.destroy();
             }
 }

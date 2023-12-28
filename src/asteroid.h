@@ -10,6 +10,10 @@ class Asteroid{
         Rectangle getHitBox();
         void destroy();
         bool isAlive();
+        bool hasMetal();
+        void toggleMetal();
+        bool hasShield();
+        void toggleShield();
     private:
         Vector2 m_position;
         float m_size;
@@ -20,4 +24,6 @@ class Asteroid{
         float m_radAngle;
         Rectangle m_hitBox;
         bool m_alive;
+        bool m_metal;
+        bool m_shield;
 };

@@ -50,3 +50,12 @@ void ShockwaveManager::spawnShockwave(Vector2 p_pos, int p_horLimit, int p_verLi
             spawned = true;
         }
 }
+
+void ShockwaveManager::checkCollisions(std::vector<Asteroid>& p_asteroids){
+    for(auto& shock : m_shockwaves)
+        for(auto& asteroid : p_asteroids)
+            if(shock.isAlive() && asteroid.isAlive() && CheckCollisionCircleRec(shock.getPos(), shock.getRadius(), asteroid.getHitBox()))
+                if(asteroid.hasShield())
+                    asteroid.toggleShield();
+                ///// else asteroid.stun()  ?????
+}

@@ -100,14 +100,14 @@ void Ship::draw(){
     DrawTriangleLines(p1, p2, p3, WHITE);
     DrawCircleV(p1, 3.0f, WHITE);
     
-    DrawCircle(m_hitBox.x, m_hitBox.y, m_hitBox.z, RED);
+    // DrawCircle(m_hitBox.x, m_hitBox.y, m_hitBox.z, RED);
     // float length = 30.0f;
     // float radAngle = m_angle * DEG2RAD;
     // Vector2 endPos = {m_position.x + cos(radAngle) * length, m_position.y + sin(radAngle) * length};
     // DrawLineEx(m_position, endPos, 3.0f, GREEN);
     // DrawCircleV(m_position, 3.0f, GREEN);
     // DrawText(std::to_string(m_speed).c_str(), 10, 10, 20, WHITE);
-    DrawText(std::to_string(m_alive).c_str(), 10, 10, 20, WHITE);
+    // DrawText(std::to_string(m_alive).c_str(), 10, 10, 20, WHITE);
 }
 
 Vector3 Ship::getHitBox(){

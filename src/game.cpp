@@ -39,8 +39,8 @@ void Game::update(){
         asteroid.update();
     player.checkCollisions(asteroids);
     laserManager.checkCollisions(asteroids);
-    // flameManager.checkCollisions(asteroids);
-    // shockwaveManager.checkCollisions(asteroids);
+    flameManager.checkCollisions(asteroids);
+    shockwaveManager.checkCollisions(asteroids);
     for (auto it = asteroids.begin(); it != asteroids.end();)
         if (!it->isAlive())
             it = asteroids.erase(it); // check shield & metal after
@@ -51,6 +51,22 @@ void Game::update(){
     
     if(IsKeyPressed(KEY_P))
         asteroids.push_back(Asteroid(k_screenWidth, k_screenHeight));
+    if(IsKeyPressed(KEY_O)){
+        Asteroid ast = Asteroid(k_screenWidth, k_screenHeight);
+        ast.toggleMetal();
+        asteroids.push_back(ast);
+    }
+    if(IsKeyPressed(KEY_I)){
+        Asteroid ast = Asteroid(k_screenWidth, k_screenHeight);
+        ast.toggleShield();
+        asteroids.push_back(ast);
+    }
+    if(IsKeyPressed(KEY_U)){
+        Asteroid ast = Asteroid(k_screenWidth, k_screenHeight);
+        ast.toggleMetal();
+        ast.toggleShield();
+        asteroids.push_back(ast);
+    }
 }
 
 void Game::draw(){

@@ -40,3 +40,15 @@ void Shockwave::draw(){
 bool Shockwave::isAlive(){
     return m_alive;
 }
+
+Vector2 Shockwave::getPos(){
+    return m_position;
+}
+
+float Shockwave::getRadius(){
+    return k_size;
+}
+
+void Shockwave::destroy(){
+    m_alive = false;
+}

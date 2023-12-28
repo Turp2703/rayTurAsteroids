@@ -13,6 +13,8 @@ Asteroid::Asteroid(int p_screenWidth, int p_screenHeight){
     m_radAngle = m_angle * DEG2RAD;
     m_hitBox = {m_position.x - m_size / 2, m_position.y - m_size / 2, m_size, m_size}; // X, Y, W, H
     m_alive = true;
+    m_metal = false;
+    m_shield = false;
 }
 
 void Asteroid::update(){
@@ -34,10 +36,13 @@ void Asteroid::update(){
 }
 
 void Asteroid::draw(){
+    if(m_shield)
+        DrawCircleV(m_position, m_size + 8, SKYBLUE);
+    if(m_metal)
+        DrawCircleV(m_position, m_size + 4, LIGHTGRAY);
     DrawCircleV(m_position, m_size, GRAY);
     
-    
-    DrawRectangleRec(m_hitBox, RED);
+    // DrawRectangleRec(m_hitBox, RED);
 }
 
 Rectangle Asteroid::getHitBox(){
@@ -50,4 +55,18 @@ void Asteroid::destroy(){
 
 bool Asteroid::isAlive(){
     return m_alive;
+}
+
+bool Asteroid::hasMetal(){
+    return m_metal;
+}
+void Asteroid::toggleMetal(){
+    m_metal = !m_metal;
+}
+
+bool Asteroid::hasShield(){
+    return m_shield;
+}
+void Asteroid::toggleShield(){
+    m_shield = !m_shield;
 }

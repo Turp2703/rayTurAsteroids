@@ -52,8 +52,19 @@ void Flame::update(){
 
 void Flame::draw(){
     DrawCircleV(m_position, m_size, ORANGE);
+    
+    
+    // DrawRectangleRec(getHitBox(), BLUE);
 }
 
 bool Flame::isAlive(){
     return m_alive;
+}
+
+Rectangle Flame::getHitBox(){
+    return {m_position.x - m_size, m_position.y - m_size, 2 * m_size, 2 * m_size};
+}
+
+void Flame::destroy(){
+    m_alive = false;
 }

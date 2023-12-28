@@ -12,6 +12,8 @@ class Flame : public Projectile{
         void update();
         void draw();
         bool isAlive();
+        Rectangle getHitBox();
+        void destroy();
     private:
         const float k_sizeLoss = 0.5f; // 0.5f
         float m_speed;
