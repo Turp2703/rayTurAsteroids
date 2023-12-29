@@ -61,7 +61,7 @@ void FlameManager::checkCollisions(std::vector<Asteroid>& p_asteroids){
         for(auto& asteroid : p_asteroids)
             if(flame.isAlive() && asteroid.isAlive() && CheckCollisionRecs(asteroid.getHitBox(), flame.getHitBox())){
                 if(asteroid.hasMetal() && !asteroid.hasShield())
-                    asteroid.toggleMetal();
-                flame.destroy();
+                    asteroid.addHeat(); // heat asteroid
+                //flame.destroy();
             }
 }

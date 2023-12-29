@@ -9,7 +9,7 @@
 Game::Game()
     : player(k_screenWidth, k_screenHeight, laserManager, flameManager, shockwaveManager)
 {
-    asteroids.push_back(Asteroid(k_screenWidth, k_screenHeight));
+    /* */
 }
 
 void UpdateDrawFrame(void* arg){
@@ -43,7 +43,7 @@ void Game::update(){
     shockwaveManager.checkCollisions(asteroids);
     for (auto it = asteroids.begin(); it != asteroids.end();)
         if (!it->isAlive())
-            it = asteroids.erase(it); // check shield & metal after
+            it = asteroids.erase(it);
         else
             it++;
     
