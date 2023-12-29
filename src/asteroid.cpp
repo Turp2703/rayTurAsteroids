@@ -21,6 +21,8 @@ Asteroid::Asteroid(int p_screenWidth, int p_screenHeight){
     m_metal = false;
     m_heat = 0;
     m_shield = false;
+    m_shieldActive = false;
+    m_shieldLossTime = GetTime();
 }
 
 // Copy Constructor
@@ -29,6 +31,7 @@ Asteroid::Asteroid(const Asteroid& other)
     , m_verticalLimit(other.m_verticalLimit), m_speed(other.m_speed), m_angle(other.m_angle)
     , m_radAngle(other.m_radAngle), m_hitBox(other.m_hitBox), m_alive(other.m_alive)
     , m_metal(other.m_metal), m_heat(other.m_heat), m_shield(other.m_shield)
+    , m_shieldActive(other.m_shieldActive), m_shieldLossTime(other.m_shieldLossTime)
 {
     /* */
 }
@@ -48,6 +51,8 @@ Asteroid& Asteroid::operator=(Asteroid&& other) noexcept {
         m_metal = std::exchange(other.m_metal, false);
         m_heat = std::exchange(other.m_heat, 0);
         m_shield = std::exchange(other.m_shield, false);
+        m_shieldActive = std::exchange(other.m_shieldActive, false);
+        m_shieldLossTime = std::exchange(other.m_shieldLossTime, 0.0);
     }
     return *this;
 }
@@ -81,10 +86,13 @@ void Asteroid::update(){
     }
     
     // Recharge shield
+    if(m_shield && !m_shieldActive && GetTime() - m_shieldLossTime >= k_shieldCooldown){
+        enableShieldActive();
+    }
 }
 
 void Asteroid::draw(){
-    if(m_shield)
+    if(m_shield && m_shieldActive)
         DrawCircleV(m_position, m_size + 8, SKYBLUE);
     if(m_metal)
         DrawCircleV(m_position, m_size + 4, {240, (unsigned char)(240 - m_heat/10), (unsigned char)(240 - m_heat/10), 255});
@@ -118,8 +126,15 @@ void Asteroid::addHeat(){
 }
 
 bool Asteroid::hasShield(){
-    return m_shield;
+    return m_shieldActive;
 }
 void Asteroid::toggleShield(){
     m_shield = !m_shield;
+}
+void Asteroid::enableShieldActive(){
+    m_shieldActive = true;
+}
+void Asteroid::disableShieldActive(){
+    m_shieldLossTime = GetTime();
+    m_shieldActive = false;
 }

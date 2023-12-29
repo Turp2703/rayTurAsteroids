@@ -59,12 +59,14 @@ void Game::update(){
     if(IsKeyPressed(KEY_I)){
         Asteroid ast = Asteroid(k_screenWidth, k_screenHeight);
         ast.toggleShield();
+        ast.enableShieldActive();
         asteroids.push_back(ast);
     }
     if(IsKeyPressed(KEY_U)){
         Asteroid ast = Asteroid(k_screenWidth, k_screenHeight);
         ast.toggleMetal();
         ast.toggleShield();
+        ast.enableShieldActive();
         asteroids.push_back(ast);
     }
 }

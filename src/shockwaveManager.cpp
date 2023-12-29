@@ -56,6 +56,6 @@ void ShockwaveManager::checkCollisions(std::vector<Asteroid>& p_asteroids){
         for(auto& asteroid : p_asteroids)
             if(shock.isAlive() && asteroid.isAlive() && CheckCollisionCircleRec(shock.getPos(), shock.getRadius(), asteroid.getHitBox()))
                 if(asteroid.hasShield())
-                    asteroid.toggleShield();
+                    asteroid.disableShieldActive();
                 ///// else asteroid.stun()  ?????
 }
