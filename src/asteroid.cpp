@@ -6,7 +6,7 @@
 #include <cmath>
 #include <iostream>
 
-// Constructor
+// Constructors
 Asteroid::Asteroid(int p_screenWidth, int p_screenHeight){
     m_position.x = p_screenWidth  / 2; 
     m_position.y = p_screenHeight / 4; 
@@ -22,6 +22,18 @@ Asteroid::Asteroid(int p_screenWidth, int p_screenHeight){
     m_heat = 0;
     m_shield = false;
     m_shieldActive = false;
+    m_shieldLossTime = GetTime();
+}
+Asteroid::Asteroid(int p_screenWidth, int p_screenHeight, Vector2 p_position, float p_size, float p_speed, float p_angle, bool p_metal, bool p_shield)
+    : m_position(p_position), m_size(p_size), m_speed(p_speed), m_angle(p_angle), m_metal(p_metal), m_shield(p_shield)
+{
+    m_horizontalLimit = p_screenWidth  + m_size * 1.05f;
+    m_verticalLimit   = p_screenHeight + m_size * 1.05f;
+    m_radAngle = m_angle * DEG2RAD;
+    m_hitBox = {m_position.x - m_size / 2, m_position.y - m_size / 2, m_size, m_size}; // X, Y, W, H
+    m_alive = true;
+    m_heat = 0;
+    m_shieldActive = m_shield;
     m_shieldLossTime = GetTime();
 }
 

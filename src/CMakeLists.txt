@@ -34,7 +34,7 @@ endif()
 
 # Our Project
 
-add_executable(${PROJECT_NAME} main.cpp game.cpp ship.cpp projectile.cpp laser.cpp laserManager.cpp asteroid.cpp flame.cpp flameManager.cpp shockwave.cpp shockwavemanager.cpp)
+add_executable(${PROJECT_NAME} main.cpp game.cpp ship.cpp projectile.cpp laser.cpp laserManager.cpp asteroid.cpp flame.cpp flameManager.cpp shockwave.cpp shockwaveManager.cpp portal.cpp portalManager.cpp)
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)
 

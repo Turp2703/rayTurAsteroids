@@ -10,6 +10,8 @@ Game::Game()
     : player(k_screenWidth, k_screenHeight, laserManager, flameManager, shockwaveManager)
 {
     /* */
+    Portal p1(asteroids, {150.f, 200.f}, 10, 8, 0.f, 25.f, 1, k_screenWidth, k_screenHeight, false, true);
+    portals.push_back(p1);
 }
 
 void UpdateDrawFrame(void* arg){
@@ -46,11 +48,20 @@ void Game::update(){
             it = asteroids.erase(it);
         else
             it++;
+        
+    // portalManager.update();
+    for(auto& portal : portals)
+        portal.update();
+    for (auto it = portals.begin(); it != portals.end();)
+        if (!it->isAlive())
+            it = portals.erase(it);
+        else
+            it++;
     
-    
-    
-    if(IsKeyPressed(KEY_P))
+    // Asteroid debug
+    if(IsKeyPressed(KEY_P)){
         asteroids.push_back(Asteroid(k_screenWidth, k_screenHeight));
+    }
     if(IsKeyPressed(KEY_O)){
         Asteroid ast = Asteroid(k_screenWidth, k_screenHeight);
         ast.toggleMetal();
@@ -69,17 +80,33 @@ void Game::update(){
         ast.enableShieldActive();
         asteroids.push_back(ast);
     }
+    if(IsKeyDown(KEY_Y)){
+        // Vector2 pos = { (float)GetRandomValue(0, k_screenWidth), (float)GetRandomValue(0, k_screenHeight) };
+        Vector2 pos = { k_screenWidth / 2.f, k_screenHeight / 2.f };
+        float size = GetRandomValue(15, 40);
+        float speed = GetRandomValue(5, 20) / 10.0f;
+        float angle = GetRandomValue(0, 359);
+        bool metal = GetRandomValue(0, 1);
+        bool shield = GetRandomValue(0, 1);
+        Asteroid ast(k_screenWidth, k_screenHeight, pos, size, speed, angle, metal, shield);
+        asteroids.push_back(ast);
+    }
 }
 
 void Game::draw(){
     ClearBackground(BLACK);
-    // DrawFPS(10, 10);
     player.draw();
     laserManager.draw();
     flameManager.draw();
     shockwaveManager.draw();
     for(auto& asteroid : asteroids)
         asteroid.draw();
+    
+    // portalManager.draw();
+    for(auto& portal : portals)
+        portal.draw();
+    
+    // DrawFPS(10, 10);
 }
 
 void Game::shutdown(){

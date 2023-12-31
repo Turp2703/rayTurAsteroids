@@ -5,6 +5,7 @@
 class Asteroid{
     public:
         Asteroid(int, int);
+        Asteroid(int, int, Vector2, float, float, float, bool, bool);
         Asteroid(const Asteroid&);
         Asteroid& operator=(Asteroid&&) noexcept;
         void update();
@@ -20,8 +21,8 @@ class Asteroid{
         void enableShieldActive();
         void disableShieldActive();
     private:
-        const int k_maxHeat = 2400; // 2400
-        const int k_heatIncrease = 8; // 8
+        const int k_maxHeat = 1800; // 2400
+        const int k_heatIncrease = 9; // 8
         const int k_heatDecrease = 6; // 6
         const int k_shieldCooldown = 10; // 10
         Vector2 m_position;

@@ -2,6 +2,6 @@
 
 int main(){
     Game game;
-    game.init("rayAsteroidsTest");
+    game.init("rayTurAsteroids");
     return 0;
 }
