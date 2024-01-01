@@ -8,7 +8,7 @@
 
 class Portal{
     public:
-        Portal(std::vector<Asteroid>&, Vector2, int, int, float, float, double, int, int, bool, bool);
+        Portal(std::vector<Asteroid>&, Vector2, int, int, float, float, double, int, int, float, float, bool, bool);
         Portal(const Portal&);
         Portal& operator=(Portal&&) noexcept;
         void update();
@@ -26,8 +26,8 @@ class Portal{
         double m_interval;
         int m_screenWidth;
         int m_screenHeight;
-        // size
-        // speed
+        float m_size;
+        float m_speed;
         bool m_metals;
         bool m_shields;
         bool m_alive;

@@ -10,7 +10,7 @@ Game::Game()
     : player(k_screenWidth, k_screenHeight, laserManager, flameManager, shockwaveManager)
 {
     /* */
-    Portal p1(asteroids, {150.f, 200.f}, 10, 8, 0.f, 25.f, 1, k_screenWidth, k_screenHeight, false, true);
+    Portal p1(asteroids, {150.f, 200.f}, 20, 3, 0.f, 25.f, 0.5f, k_screenWidth, k_screenHeight, 25.f, 1.2f, true, false);
     portals.push_back(p1);
 }
 
