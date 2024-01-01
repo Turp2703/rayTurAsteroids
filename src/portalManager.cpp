@@ -27,15 +27,15 @@ void PortalManager::draw(){
 }
 
 void PortalManager::spawnPortal(Vector2 p_position){
-    int groupCount = 10;
-    int groupSize = 3;
-    float angle = 0.f;
-    float angleIncrement = 25.f;
-    float interval = 0.5f;
-    float size = 25.f;
-    float speed = 1.2f;
-    bool metal = true;
-    bool shield = false;
+    int groupCount = GetRandomValue(2, 10);
+    int groupSize = GetRandomValue(1, 8);
+    float angle = GetRandomValue(0, 359);
+    float angleIncrement = GetRandomValue(0, 90);
+    float interval = GetRandomValue(1, 20) / 10.f;
+    float size = GetRandomValue(15, 40);
+    float speed = GetRandomValue(5, 20) / 10.f;
+    bool metal = GetRandomValue(0, 1);
+    bool shield = GetRandomValue(0, 1);
     Portal p1(p_position, groupCount, groupSize, angle, angleIncrement, interval, m_screenWidth, m_screenHeight, size, speed, metal, shield);
     m_portals.push_back(p1);
 }

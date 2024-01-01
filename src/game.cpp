@@ -85,9 +85,10 @@ void Game::update(){
         asteroids.push_back(ast);
     }
     // Portal Debug
-    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         portalManager.spawnPortal( {(float)GetMouseX(), (float)GetMouseY() });
-    }
+    if(IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+        asteroids.clear();
 }
 
 void Game::draw(){
