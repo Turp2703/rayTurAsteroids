@@ -15,6 +15,8 @@ Portal::Portal(Vector2 p_position, int p_groupCount, int p_groupSize, float p_an
     if(m_groupSize < 1) m_groupSize = 1;
     m_previousTime = 0;
     m_alive = true;
+    m_startTime = GetTime();
+    m_active = false;
 }
 
 // Copy Constructor
@@ -22,8 +24,8 @@ Portal::Portal(const Portal& other)
     : m_position(other.m_position), m_groupCount(other.m_groupCount), m_groupSize(other.m_groupSize)
     , m_angle(other.m_angle), m_angleIncrement(other.m_angleIncrement), m_previousTime(other.m_previousTime)
     , m_interval(other.m_interval), m_screenWidth(other.m_screenWidth), m_screenHeight(other.m_screenHeight)
-    , m_size(other.m_size), m_speed(other.m_speed), m_metals(other.m_metals)
-    , m_shields(other.m_shields), m_alive(other.m_alive)
+    , m_size(other.m_size), m_speed(other.m_speed), m_metals(other.m_metals), m_shields(other.m_shields)
+    , m_alive(other.m_alive), m_startTime(other.m_startTime), m_active(other.m_active)
 {
     /* */
 }
@@ -46,25 +48,32 @@ Portal& Portal::operator=(Portal&& other) noexcept {
         m_metals = std::exchange(other.m_metals, false);
         m_shields = std::exchange(other.m_shields, false);
         m_alive = std::exchange(other.m_alive, false);
+        m_startTime = std::exchange(other.m_startTime, 0.0);
+        m_active = std::exchange(other.m_active, false);
     }
     return *this;
 }
 
 void Portal::update(std::vector<Asteroid>& p_asteroids){
     double currentTime = GetTime();
-    if(currentTime - m_previousTime >= m_interval){
-        Vector2 center = {m_position.x + k_size.x / 2, m_position.y + k_size.y / 2};
+    if(m_active){
+        if(currentTime - m_previousTime >= m_interval){
+            Vector2 center = {m_position.x + k_size.x / 2, m_position.y + k_size.y / 2};
         
-        float extraAngle = 360 / m_groupSize;
-        for(int i = 0; i < m_groupSize; i++){
-            Asteroid ast(m_screenWidth, m_screenHeight, center, m_size, m_speed, m_angle + i * extraAngle, m_metals, m_shields);
-            p_asteroids.push_back(ast);
+            float extraAngle = 360 / m_groupSize;
+            for(int i = 0; i < m_groupSize; i++){
+                Asteroid ast(m_screenWidth, m_screenHeight, center, m_size, m_speed, m_angle + i * extraAngle, m_metals,    m_shields);
+                p_asteroids.push_back(ast);
+            }
+        
+            m_angle = (int)(m_angle + m_angleIncrement) % 360;
+            m_groupCount--;
+            m_previousTime = currentTime;
+            m_alive = m_groupCount > 0;
         }
-        
-        m_angle = (int)(m_angle + m_angleIncrement) % 360;
-        m_groupCount--;
-        m_previousTime = currentTime;
-        m_alive = m_groupCount > 0;
+    }
+    else{
+        m_active = currentTime - m_startTime > k_warmUpTime;
     }
 }
 

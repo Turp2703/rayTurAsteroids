@@ -40,7 +40,7 @@ void FlameManager::draw(){
         // DrawCircle(10.0f, i*10.0f, 3.0f, GREEN);
 }
 void FlameManager::drawIndicators(){
-    DrawRectangle(GetScreenWidth() - 30, 10, 20, m_charge * 40 / 10000, ORANGE);
+    DrawRectangle(GetScreenWidth() - 30, 10, 20, m_charge * 40 / k_maxCharge , ORANGE);
     DrawRectangleLines(GetScreenWidth() - 30, 10, 20, 40, YELLOW);
 }
 

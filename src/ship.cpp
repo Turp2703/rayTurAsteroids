@@ -88,8 +88,10 @@ void Ship::update(){
     // Attacks
     if(IsKeyPressed(KEY_J))
         m_laserManager.spawnLaser(m_position, m_radAngle, m_horizontalLimit, m_verticalLimit);
-    if(IsKeyDown(KEY_K))
+    if(IsKeyDown(KEY_K)){
         m_flameManager.spawnFlame(m_position, m_radAngle, m_horizontalLimit, m_verticalLimit);
+        m_flameManager.spawnFlame(m_position, m_radAngle, m_horizontalLimit, m_verticalLimit);
+    }
     if(IsKeyPressed(KEY_L))
         m_shockwaveManager.spawnShockwave(m_position, m_horizontalLimit, m_verticalLimit);
 }
@@ -110,6 +112,8 @@ void Ship::draw(){
     // DrawLineEx(m_position, endPos, 3.0f, GREEN);
     // DrawCircleV(m_position, 3.0f, GREEN);
     // DrawText(std::to_string(m_speed).c_str(), 10, 10, 20, WHITE);
+    // for(unsigned int i = 0; i < p_asteroids.size(); i++)
+        // DrawText(std::to_string(0).c_str(), 10 * i, 30, 20, WHITE);
     
     // Alive
     DrawText(std::to_string(m_alive).c_str(), 10, 10, 20, WHITE);
@@ -132,6 +136,6 @@ void Ship::checkCollisions(std::vector<Asteroid>& p_asteroids){
         if(asteroid.isAlive() && CheckCollisionCircleRec({m_hitBox.x, m_hitBox.y}, m_hitBox.z, asteroid.getHitBox()))
             kill();
         // testing only
-        else
-            m_alive = true;
+        // else
+            // m_alive = true;
 }

@@ -16,6 +16,7 @@ class Portal{
         bool isAlive();
     private:
         const Vector2 k_size = { 40.f, 60.f }; // 40, 60
+        const double k_warmUpTime = 1.0; // 1.0
         Vector2 m_position;
         int m_groupCount;
         int m_groupSize;
@@ -30,4 +31,6 @@ class Portal{
         bool m_metals;
         bool m_shields;
         bool m_alive;
+        double m_startTime;
+        bool m_active;
 };
