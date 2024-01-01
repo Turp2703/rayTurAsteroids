@@ -12,6 +12,7 @@ class FlameManager{
         FlameManager();
         void update();
         void draw();
+        void drawIndicators();
         void spawnFlame(Vector2, float, int, int);
         void checkCollisions(std::vector<Asteroid>&);
     private:

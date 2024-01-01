@@ -93,13 +93,15 @@ void Game::update(){
 
 void Game::draw(){
     ClearBackground(BLACK);
-    player.draw();
     laserManager.draw();
-    flameManager.draw();
-    shockwaveManager.draw();
     for(auto& asteroid : asteroids)
         asteroid.draw();
+    flameManager.draw();
+    shockwaveManager.draw();
     portalManager.draw();
+    player.draw();
+    flameManager.drawIndicators();
+    shockwaveManager.drawIndicators();
     
     // DrawFPS(10, 10);
     // for(unsigned int i = 0; i < asteroids.size(); i++)

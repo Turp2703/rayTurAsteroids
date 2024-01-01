@@ -95,6 +95,7 @@ void Ship::update(){
 }
 
 void Ship::draw(){
+    // Draw Ship
     // vector P over center C rotation = C + rotate(P - C)
     Vector2 p1 = {m_position.x + cos(m_radAngle) * m_size * 1.5f, m_position.y + sin(m_radAngle) * m_size * 1.5f};
     Vector2 p2 = Vector2Add(m_position, Vector2Rotate(Vector2Subtract(p1, m_position), 5*PI/6));

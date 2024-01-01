@@ -35,12 +35,13 @@ void FlameManager::draw(){
     for(Flame flame: m_flames)
         flame.draw();
     
-    DrawRectangle(GetScreenWidth() - 30, 10, 20, m_charge * 40 / 10000, ORANGE);
-    DrawRectangleLines(GetScreenWidth() - 30, 10, 20, 40, YELLOW);
-    
     // DrawText(std::to_string(m_charge).c_str(), 10, 10, 20, WHITE);
     // for(unsigned int i = 0; i < m_flames.size(); i++)
         // DrawCircle(10.0f, i*10.0f, 3.0f, GREEN);
+}
+void FlameManager::drawIndicators(){
+    DrawRectangle(GetScreenWidth() - 30, 10, 20, m_charge * 40 / 10000, ORANGE);
+    DrawRectangleLines(GetScreenWidth() - 30, 10, 20, 40, YELLOW);
 }
 
 void FlameManager::spawnFlame(Vector2 p_pos, float p_radAngle, int p_horLimit, int p_verLimit){
