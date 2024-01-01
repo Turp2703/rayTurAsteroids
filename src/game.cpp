@@ -2,16 +2,17 @@
 
 #include "raylib.h"
 
+#include <iostream>
+
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
 #endif
 
 Game::Game()
     : player(k_screenWidth, k_screenHeight, laserManager, flameManager, shockwaveManager)
+    , portalManager(k_screenWidth, k_screenHeight)
 {
     /* */
-    Portal p1(asteroids, {150.f, 200.f}, 20, 3, 0.f, 25.f, 0.5f, k_screenWidth, k_screenHeight, 25.f, 1.2f, true, false);
-    portals.push_back(p1);
 }
 
 void UpdateDrawFrame(void* arg){
@@ -48,15 +49,7 @@ void Game::update(){
             it = asteroids.erase(it);
         else
             it++;
-        
-    // portalManager.update();
-    for(auto& portal : portals)
-        portal.update();
-    for (auto it = portals.begin(); it != portals.end();)
-        if (!it->isAlive())
-            it = portals.erase(it);
-        else
-            it++;
+    portalManager.update(asteroids);
     
     // Asteroid debug
     if(IsKeyPressed(KEY_P)){
@@ -91,6 +84,10 @@ void Game::update(){
         Asteroid ast(k_screenWidth, k_screenHeight, pos, size, speed, angle, metal, shield);
         asteroids.push_back(ast);
     }
+    // Portal Debug
+    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+        portalManager.spawnPortal( {(float)GetMouseX(), (float)GetMouseY() });
+    }
 }
 
 void Game::draw(){
@@ -101,12 +98,11 @@ void Game::draw(){
     shockwaveManager.draw();
     for(auto& asteroid : asteroids)
         asteroid.draw();
-    
-    // portalManager.draw();
-    for(auto& portal : portals)
-        portal.draw();
+    portalManager.draw();
     
     // DrawFPS(10, 10);
+    // for(unsigned int i = 0; i < asteroids.size(); i++)
+        // DrawText(std::to_string(0).c_str(), 10 * i, 30, 20, WHITE);
 }
 
 void Game::shutdown(){

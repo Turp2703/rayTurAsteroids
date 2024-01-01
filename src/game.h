@@ -7,7 +7,7 @@
 #include "flameManager.h"
 #include "shockwaveManager.h"
 #include "asteroid.h"
-#include "portal.h"
+#include "portalManager.h"
 
 class Game{
     public:
@@ -24,6 +24,5 @@ class Game{
         FlameManager flameManager;
         ShockwaveManager shockwaveManager;
         std::vector<Asteroid> asteroids;
-        // PortalManager
-        std::vector<Portal> portals;
+        PortalManager portalManager;
 };

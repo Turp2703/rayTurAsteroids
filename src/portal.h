@@ -8,15 +8,14 @@
 
 class Portal{
     public:
-        Portal(std::vector<Asteroid>&, Vector2, int, int, float, float, double, int, int, float, float, bool, bool);
+        Portal(Vector2, int, int, float, float, double, int, int, float, float, bool, bool);
         Portal(const Portal&);
         Portal& operator=(Portal&&) noexcept;
-        void update();
+        void update(std::vector<Asteroid>&);
         void draw();
         bool isAlive();
     private:
         const Vector2 k_size = { 40.f, 60.f }; // 40, 60
-        std::vector<Asteroid>& m_asteroids;
         Vector2 m_position;
         int m_groupCount;
         int m_groupSize;
