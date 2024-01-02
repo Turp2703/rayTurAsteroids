@@ -15,6 +15,7 @@ class Ship{
         bool isAlive();
         void kill();
         void checkCollisions(std::vector<Asteroid>&);
+        void restart();
     private:
         const int k_maxSpeed = 5; // 5
         const float k_acceleration = 0.2f; // 0.2f

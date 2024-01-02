@@ -108,6 +108,7 @@ void Asteroid::draw(){
         DrawCircleV(m_position, m_size + 8, SKYBLUE);
     if(m_metal)
         DrawCircleV(m_position, m_size + 4, {240, (unsigned char)(240 - m_heat/10), (unsigned char)(240 - m_heat/10), 255});
+    DrawCircleV(m_position, m_size + 1, DARKGRAY);
     DrawCircleV(m_position, m_size, GRAY);
     
     // DrawRectangleRec(m_hitBox, RED);

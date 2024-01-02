@@ -13,6 +13,7 @@ class PortalManager{
         void update(std::vector<Asteroid>&);
         void draw();
         void spawnPortal(Vector2);
+        void restart();
     private:
         std::vector<Portal> m_portals;
         int m_screenWidth;
