@@ -40,8 +40,8 @@ void FlameManager::draw(){
         // DrawCircle(10.0f, i*10.0f, 3.0f, GREEN);
 }
 void FlameManager::drawIndicators(){
-    DrawRectangle(GetScreenWidth() - 30, 10, 20, m_charge * 40 / k_maxCharge , ORANGE);
-    DrawRectangleLines(GetScreenWidth() - 30, 10, 20, 40, YELLOW);
+    DrawRectangle(GetScreenWidth() - 30, GetScreenHeight() - 45, 20, m_charge * 40 / k_maxCharge , ORANGE);
+    DrawRectangleLines(GetScreenWidth() - 30, GetScreenHeight() - 45, 20, 40, YELLOW);
 }
 
 void FlameManager::spawnFlame(Vector2 p_pos, float p_radAngle, int p_horLimit, int p_verLimit){
@@ -65,4 +65,9 @@ void FlameManager::checkCollisions(std::vector<Asteroid>& p_asteroids){
                     asteroid.addHeat(); // heat asteroid
                 //flame.destroy();
             }
+}
+
+void FlameManager::restart(){
+    m_charge = k_maxCharge;
+    m_flames.clear();
 }

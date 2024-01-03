@@ -69,7 +69,7 @@ Asteroid& Asteroid::operator=(Asteroid&& other) noexcept {
     return *this;
 }
 
-void Asteroid::update(){
+void Asteroid::update(int& p_score){
     // Calculate pos
     m_radAngle = m_angle * DEG2RAD;
     Vector2 endPos = {
@@ -90,6 +90,7 @@ void Asteroid::update(){
     if(m_metal){
         if (m_heat == k_maxHeat){
             m_heat = 0;
+            p_score += 5;
             m_metal = false;
         }
         else if(m_heat - k_heatDecrease >= 0){
@@ -119,8 +120,9 @@ Rectangle Asteroid::getHitBox(){
     return m_hitBox;
 }
 
-void Asteroid::destroy(){
+void Asteroid::destroy(int& p_score){
     m_alive = false;
+    p_score += 20;
 }
 
 bool Asteroid::isAlive(){

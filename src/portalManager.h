@@ -10,7 +10,7 @@
 class PortalManager{
     public:
         PortalManager(int, int);
-        void update(std::vector<Asteroid>&);
+        void update(std::vector<Asteroid>&, int&);
         void draw();
         void spawnPortal(Vector2);
         void restart();

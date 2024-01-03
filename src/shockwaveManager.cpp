@@ -36,8 +36,8 @@ void ShockwaveManager::draw(){
 }
 void ShockwaveManager::drawIndicators(){
     for(int i = 0; i < k_charges; i++){
-        DrawRectangle(GetScreenWidth() - 30 * (i + 2), 10, 20, m_charges[i] * 40 / 10000, SKYBLUE);
-        DrawRectangleLines(GetScreenWidth() - 30 * (i + 2), 10, 20, 40, WHITE);
+        DrawRectangle(GetScreenWidth() - 30 * (i + 2), GetScreenHeight() - 45, 20, m_charges[i] * 40 / 10000, SKYBLUE);
+        DrawRectangleLines(GetScreenWidth() - 30 * (i + 2), GetScreenHeight() - 45, 20, 40, WHITE);
     }
 }
 
@@ -45,7 +45,7 @@ void ShockwaveManager::spawnShockwave(Vector2 p_pos, int p_horLimit, int p_verLi
     
     bool spawned = false;
     for(int i = 0; i < k_charges && !spawned; i++)
-        if(m_charges[i] == 10000){
+        if(m_charges[i] == k_maxCharge){
             m_shockwaves.push_back(Shockwave(p_pos, p_horLimit, p_verLimit));
             m_charges[i] = 0;
             spawned = true;
@@ -59,4 +59,10 @@ void ShockwaveManager::checkCollisions(std::vector<Asteroid>& p_asteroids){
                 if(asteroid.hasShield())
                     asteroid.disableShieldActive();
                 ///// else asteroid.stun()  ?????
+}
+
+void ShockwaveManager::restart(){
+    m_shockwaves.clear();
+    for(int i = 0; i < k_charges; i++)
+        m_charges[i] = k_maxCharge;
 }

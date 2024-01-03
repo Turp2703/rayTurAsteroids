@@ -33,12 +33,16 @@ void LaserManager::spawnLaser(Vector2 p_pos, float p_radAngle, int p_horLimit, i
         m_lasers.push_back(Laser(p_pos, p_radAngle, p_horLimit, p_verLimit));
 }
 
-void LaserManager::checkCollisions(std::vector<Asteroid>& p_asteroids){
+void LaserManager::checkCollisions(std::vector<Asteroid>& p_asteroids, int& p_score){
     for(auto& laser : m_lasers)
         for(auto& asteroid : p_asteroids)
             if(laser.isAlive() && asteroid.isAlive() && CheckCollisionRecs(asteroid.getHitBox(), laser.getHitBox())){
                 if(!asteroid.hasMetal() && !asteroid.hasShield())
-                    asteroid.destroy();
+                    asteroid.destroy(p_score);
                 laser.destroy();
             }
+}
+
+void LaserManager::restart(){
+    m_lasers.clear();
 }

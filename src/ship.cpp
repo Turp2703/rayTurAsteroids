@@ -28,8 +28,7 @@ Ship::Ship(int p_screenWidth, int p_screenHeight
 void Ship::update(){
     if(m_alive){
         // WASD Keys
-            // bool aDown = IsKeyDown(KEY_LEFT), dDown = IsKeyDown(KEY_RIGHT);
-            // bool wDown = IsKeyDown(KEY_UP), sDown = IsKeyDown(KEY_DOWN);
+            // bool aDown = IsKeyDown(KEY_LEFT), dDown = IsKeyDown(KEY_RIGHT), wDown = IsKeyDown(KEY_UP), sDown = IsKeyDown(KEY_DOWN);
         bool aDown = IsKeyDown(KEY_A), dDown = IsKeyDown(KEY_D), wDown = IsKeyDown(KEY_W), sDown = IsKeyDown(KEY_S);
         
         // Change angle

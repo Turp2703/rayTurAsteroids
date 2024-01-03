@@ -25,4 +25,5 @@ class Game{
         ShockwaveManager shockwaveManager;
         std::vector<Asteroid> asteroids;
         PortalManager portalManager;
+        int score;
 };

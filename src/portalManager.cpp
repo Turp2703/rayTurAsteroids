@@ -8,7 +8,7 @@ PortalManager::PortalManager(int p_screenWidth, int p_screenHeight)
     /* */
 }
 
-void PortalManager::update(std::vector<Asteroid>& p_asteroids){
+void PortalManager::update(std::vector<Asteroid>& p_asteroids, int& p_score){
     for(auto& portal : m_portals)
         portal.update(p_asteroids);
     for (auto it = m_portals.begin(); it != m_portals.end();)
@@ -17,8 +17,10 @@ void PortalManager::update(std::vector<Asteroid>& p_asteroids){
         else
             it++;
         
-    if(p_asteroids.empty() && m_portals.empty())
+    if(p_asteroids.empty() && m_portals.empty()){
         spawnPortal((Vector2){(float)GetRandomValue(50, m_screenWidth-50),(float)GetRandomValue(50, m_screenHeight-50)});
+        p_score += 250;
+    }
 }
 
 void PortalManager::draw(){

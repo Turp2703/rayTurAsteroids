@@ -3,16 +3,18 @@
 #include "raylib.h"
 
 #include <iostream>
+#include <string>
 
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
 #endif
 
 Game::Game()
-    : player(k_screenWidth, k_screenHeight, laserManager, flameManager, shockwaveManager)
-    , portalManager(k_screenWidth, k_screenHeight)
+    : player(k_screenWidth, k_screenHeight - 50, laserManager, flameManager, shockwaveManager)
+    , portalManager(k_screenWidth, k_screenHeight - 50)
 {
-    /* */
+    score = 0;
+    portalManager.spawnPortal((Vector2){(float)GetRandomValue(50, k_screenWidth-50),(float)GetRandomValue(50, k_screenHeight-100)});
 }
 
 void UpdateDrawFrame(void* arg){
@@ -39,9 +41,9 @@ void Game::update(){
     flameManager.update();
     shockwaveManager.update();
     for(auto& asteroid : asteroids)
-        asteroid.update();
+        asteroid.update(score);
     player.checkCollisions(asteroids);
-    laserManager.checkCollisions(asteroids);
+    laserManager.checkCollisions(asteroids, score);
     flameManager.checkCollisions(asteroids);
     shockwaveManager.checkCollisions(asteroids);
     for (auto it = asteroids.begin(); it != asteroids.end();)
@@ -49,13 +51,24 @@ void Game::update(){
             it = asteroids.erase(it);
         else
             it++;
-    portalManager.update(asteroids);
+    portalManager.update(asteroids, score);
     
     // GAME OVER
-    if(!player.isAlive() && IsKeyPressed(KEY_SPACE)){
-        asteroids.clear();
-        player.restart();
-        portalManager.restart();
+    if(!player.isAlive()){
+        if(IsKeyPressed(KEY_R)){
+            asteroids.clear();
+            player.restart();
+            portalManager.restart();
+            laserManager.restart();
+            flameManager.restart();
+            shockwaveManager.restart();
+            score = 0;
+            portalManager.spawnPortal((Vector2){(float)GetRandomValue(50, k_screenWidth-50),(float)GetRandomValue(50, k_screenHeight-100)});
+            
+        }
+        else if(IsKeyPressed(KEY_T)){
+            /* */
+        }
     }
     
     // // Asteroid debug
@@ -100,6 +113,8 @@ void Game::update(){
 
 void Game::draw(){
     ClearBackground(BLACK);
+    
+    // Objects
     laserManager.draw();
     for(auto& asteroid : asteroids)
         asteroid.draw();
@@ -107,15 +122,26 @@ void Game::draw(){
     shockwaveManager.draw();
     portalManager.draw();
     player.draw();
+    
+    // UI
+    DrawRectangle(-1, k_screenHeight - 50, k_screenWidth + 1, 51, BLACK);
+    DrawLine(-1, k_screenHeight - 50, k_screenWidth + 1, k_screenHeight - 50, GREEN);
     flameManager.drawIndicators();
     shockwaveManager.drawIndicators();
+    std::string scoreText = "SCORE: " + std::to_string(score);
+    DrawText(scoreText.c_str(), 30, k_screenHeight - 40, 35, GREEN);
     
     // Game Over Screen
     if(!player.isAlive()){
         const char *gameOverText = "GAME OVER";
+        const char *restartText = "PRESS [R] TO RESTART";
+        const char *menuText = "PRESS [T] TO RETURN";
+        DrawRectangle(k_screenWidth / 2 - MeasureText(restartText, 20) / 2 - 15, k_screenHeight / 2 - 45, MeasureText(restartText, 20) + 30, 140, GREEN);
+        DrawRectangle(k_screenWidth / 2 - MeasureText(restartText, 20) / 2 - 10, k_screenHeight / 2 - 40, MeasureText(restartText, 20) + 20, 130, BLACK);
+        DrawText(scoreText.c_str(), k_screenWidth / 2 - MeasureText(scoreText.c_str(), 20) / 2, k_screenHeight / 2 - 30, 20, GREEN);
         DrawText(gameOverText, k_screenWidth / 2 - MeasureText(gameOverText, 20) / 2, k_screenHeight / 2, 20, GREEN);
-        const char *spaceText = "PRESS SPACE TO RESTART";
-        DrawText(spaceText, k_screenWidth / 2 - MeasureText(spaceText, 20) / 2, k_screenHeight / 2 + 30, 20, GREEN);
+        DrawText(restartText, k_screenWidth / 2 - MeasureText(restartText, 20) / 2, k_screenHeight / 2 + 30, 20, GREEN);
+        DrawText(menuText, k_screenWidth / 2 - MeasureText(menuText, 20) / 2, k_screenHeight / 2 + 60, 20, GREEN);
     }
     
     // DrawFPS(10, 10);

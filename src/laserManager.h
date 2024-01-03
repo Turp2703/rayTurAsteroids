@@ -11,7 +11,8 @@ class LaserManager{
         void update();
         void draw();
         void spawnLaser(Vector2, float, int, int);
-        void checkCollisions(std::vector<Asteroid>&);
+        void checkCollisions(std::vector<Asteroid>&, int&);
+        void restart();
     private:
         std::vector<Laser> m_lasers;
 };
