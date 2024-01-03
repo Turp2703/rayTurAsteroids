@@ -1,13 +1,6 @@
 #pragma once
 
-#include <vector>
-
-#include "ship.h"
-#include "laserManager.h"
-#include "flameManager.h"
-#include "shockwaveManager.h"
-#include "asteroid.h"
-#include "portalManager.h"
+#include "scene.h"
 
 class Game{
     public:
@@ -15,15 +8,10 @@ class Game{
         void init(const char*);
         void update();
         void draw();
+        void changeScene(Scene*);
     private:
         const int k_screenWidth = 800;
         const int k_screenHeight = 600;
         void shutdown();
-        Ship player;
-        LaserManager laserManager;
-        FlameManager flameManager;
-        ShockwaveManager shockwaveManager;
-        std::vector<Asteroid> asteroids;
-        PortalManager portalManager;
-        int score;
+        Scene* currentScene;
 };
