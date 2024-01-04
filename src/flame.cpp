@@ -56,6 +56,13 @@ void Flame::draw(){
     
     // DrawRectangleRec(getHitBox(), BLUE);
 }
+void Flame::draw(Texture2D p_texture[4]){
+    int n = 0;
+    if(m_size > 11) n = 3;
+    else if(m_size > 7) n = 2;
+    else if(m_size > 3) n = 1;
+    DrawTextureEx(p_texture[n], m_position, m_radAngle * RAD2DEG, 2.f, WHITE);
+}
 
 bool Flame::isAlive(){
     return m_alive;

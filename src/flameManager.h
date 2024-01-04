@@ -12,6 +12,7 @@ class FlameManager{
         FlameManager();
         void update();
         void draw();
+        void draw(Texture2D[]);
         void drawIndicators();
         void spawnFlame(Vector2, float, int, int);
         void checkCollisions(std::vector<Asteroid>&);
@@ -24,7 +25,7 @@ class FlameManager{
         const int k_maxSize = 16; // 16
         const int k_maxCharge = 30000; // 30000
         const int k_chargeCooldown = 1; // 1
-        const int k_chargeRecover = 100; // 100
+        const int k_chargeRecover = 200; // 200
         const int k_chargeConsumption = 100; // 100
         std::vector<Flame> m_flames;
         int m_charge;

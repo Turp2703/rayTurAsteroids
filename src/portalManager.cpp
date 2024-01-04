@@ -30,10 +30,14 @@ void PortalManager::draw(){
     // for(unsigned int i = 0; i < m_portals.size(); i++)
         // DrawText(std::to_string(0).c_str(), 10 * i, 30, 20, WHITE);
 }
+void PortalManager::draw(Texture2D p_texture){
+    for(auto& portal : m_portals)
+        portal.draw(p_texture);
+}
 
 void PortalManager::spawnPortal(Vector2 p_position){
-    bool metal = GetRandomValue(0, 1);
-    bool shield = metal ? GetRandomValue(0, 1) * GetRandomValue(0, 1) : GetRandomValue(0, 1);
+    bool shield = GetRandomValue(0, 1);
+    bool metal = shield ? GetRandomValue(0, 1) * GetRandomValue(0, 1) : GetRandomValue(0, 1);
     int groupCount, groupSize;
     if(metal && shield){
         groupSize = GetRandomValue(1, 8);

@@ -11,6 +11,7 @@ class Shockwave : public Projectile{
         Shockwave& operator=(Shockwave&&) noexcept;
         void update();
         void draw();
+        void draw(Texture2D);
         bool isAlive();
         Vector2 getPos();
         float getRadius();

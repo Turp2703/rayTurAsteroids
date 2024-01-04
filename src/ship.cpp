@@ -88,8 +88,9 @@ void Ship::update(){
         if(IsKeyPressed(KEY_J))
             m_laserManager.spawnLaser(m_position, m_radAngle, m_horizontalLimit, m_verticalLimit);
         if(IsKeyDown(KEY_K)){
-            m_flameManager.spawnFlame(m_position, m_radAngle, m_horizontalLimit, m_verticalLimit);
-            m_flameManager.spawnFlame(m_position, m_radAngle, m_horizontalLimit, m_verticalLimit);
+            Vector2 origin = {m_position.x + cos(m_radAngle) * m_size*1.5f, m_position.y + sin(m_radAngle) * m_size*1.5f};
+            m_flameManager.spawnFlame(origin, m_radAngle, m_horizontalLimit, m_verticalLimit);
+            m_flameManager.spawnFlame(origin, m_radAngle, m_horizontalLimit, m_verticalLimit);
         }
         if(IsKeyPressed(KEY_L))
             m_shockwaveManager.spawnShockwave(m_position, m_horizontalLimit, m_verticalLimit);
@@ -112,6 +113,18 @@ void Ship::draw(){
     
     // DrawCircle(m_hitBox.x, m_hitBox.y, m_hitBox.z, RED);
     // DrawText(std::to_string(m_alive).c_str(), 10, 10, 20, WHITE);
+}
+void Ship::draw(Texture2D p_texture, Texture2D p_textureDead){
+    if(m_alive){
+        Vector2 p1 = {m_position.x + cos(m_radAngle) * m_size * 1.5f, m_position.y + sin(m_radAngle) * m_size * 1.5f};
+        DrawCircleV(p1, 3.0f, WHITE);
+        DrawCircleV(m_position, 3.0f, RED);
+        
+        DrawTextureEx(p_texture, {m_position.x - p_texture.width / 2, m_position.y - p_texture.height / 2}, 0, 1.f, WHITE);
+    }
+    else{
+        DrawTextureEx(p_textureDead, m_position, m_angle, 2.f, WHITE);
+    }
 }
 
 Vector3 Ship::getHitBox(){

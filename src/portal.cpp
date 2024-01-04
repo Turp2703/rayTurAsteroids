@@ -83,6 +83,9 @@ void Portal::draw(){
     // DrawText(std::to_string(m_previousTime).c_str(), 10, 30, 20, WHITE);
     // DrawText(std::to_string(GetTime()).c_str(), 10, 50, 20, WHITE);
 }
+void Portal::draw(Texture2D p_texture){
+    DrawTextureEx(p_texture, m_position, 0.f, 2.f, WHITE);
+}
 
 bool Portal::isAlive(){
     return m_alive;

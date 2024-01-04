@@ -11,6 +11,21 @@ SceneGame::SceneGame(int p_screenWidth, int p_screenHeight)
 {
     score = 0;
     portalManager.spawnPortal((Vector2){(float)GetRandomValue(50, m_screenWidth-50),(float)GetRandomValue(50, m_screenHeight-100)});
+    
+    
+    TraceLog(LOG_WARNING, GetApplicationDirectory());
+    
+    
+    // Textures
+    texShip = LoadTexture("assets/ship.png");
+    texShipDead = LoadTexture("assets/shipDead.png");
+    texLaser = LoadTexture("assets/laser.png");
+    texShockwave = LoadTexture("assets/shockwave.png");
+    texFlames[0] = LoadTexture("assets/flame1.png");
+    texFlames[1] = LoadTexture("assets/flame2.png");
+    texFlames[2] = LoadTexture("assets/flame3.png");
+    texFlames[3] = LoadTexture("assets/flame4.png");
+    texPortal = LoadTexture("assets/portal.png");
 }
 
 void SceneGame::update(Game* p_game){
@@ -94,13 +109,13 @@ void SceneGame::update(Game* p_game){
 
 void SceneGame::draw(){
         // Objects
-    laserManager.draw();
+    laserManager.draw(texLaser);
     for(auto& asteroid : asteroids)
         asteroid.draw();
-    flameManager.draw();
-    shockwaveManager.draw();
-    portalManager.draw();
-    player.draw();
+    flameManager.draw(texFlames);
+    shockwaveManager.draw(texShockwave);
+    portalManager.draw(texPortal);
+    player.draw(texShip, texShipDead);
     
     // UI
     DrawRectangle(-1, m_screenHeight - 50, m_screenWidth + 1, 51, BLACK);
@@ -126,4 +141,14 @@ void SceneGame::draw(){
     // DrawFPS(10, 10);
     // for(unsigned int i = 0; i < asteroids.size(); i++)
         // DrawText(std::to_string(0).c_str(), 10 * i, 30, 20, WHITE);
+}
+
+SceneGame::~SceneGame(){
+    UnloadTexture(texShip);
+    UnloadTexture(texShipDead);
+    UnloadTexture(texLaser);
+    UnloadTexture(texShockwave);
+    for(int i = 0; i < 4; i++)
+        UnloadTexture(texFlames[i]);
+    UnloadTexture(texPortal);
 }

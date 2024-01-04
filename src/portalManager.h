@@ -12,6 +12,7 @@ class PortalManager{
         PortalManager(int, int);
         void update(std::vector<Asteroid>&, int&);
         void draw();
+        void draw(Texture2D);
         void spawnPortal(Vector2);
         void restart();
     private:

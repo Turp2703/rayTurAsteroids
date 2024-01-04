@@ -16,6 +16,7 @@ class SceneGame : public Scene{
         SceneGame(int, int);
         void update(Game*);
         void draw();
+        ~SceneGame();
     private:
         Ship player;
         LaserManager laserManager;
@@ -24,4 +25,11 @@ class SceneGame : public Scene{
         std::vector<Asteroid> asteroids;
         PortalManager portalManager;
         int score;
+        
+        Texture2D texShip;
+        Texture2D texShipDead;
+        Texture2D texLaser;
+        Texture2D texShockwave;
+        Texture2D texFlames[4];
+        Texture2D texPortal;
 };

@@ -60,6 +60,9 @@ void Laser::draw(){
     
     //DrawRectangleRec(getHitBox(), BLUE);
 }
+void Laser::draw(Texture2D p_texture){
+    DrawTextureEx(p_texture, m_position, m_radAngle * RAD2DEG, 2.0f, WHITE);
+}
 
 bool Laser::isAlive(){
     return m_alive;
