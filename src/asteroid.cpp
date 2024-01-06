@@ -137,7 +137,7 @@ void Asteroid::draw(){
     // DrawRectangleRec(m_hitBox, RED);
     // DrawText(std::to_string(m_heat).c_str(), 10, 30, 20, WHITE);
 }
-void Asteroid::draw(Texture2D p_asteroid, Texture2D p_metal, Texture2D p_shield){
+void Asteroid::draw(Texture2D &p_asteroid, Texture2D &p_metal, Texture2D &p_shield){
     float mult, div;
     if(m_size > 35.f){ // Size 3
         mult = 2.5f;
@@ -177,7 +177,7 @@ void Asteroid::draw(Texture2D p_asteroid, Texture2D p_metal, Texture2D p_shield)
     
     // DrawRectangleRec(m_hitBox, RED);
 }
-void Asteroid::drawEffects(Texture2D p_particleTexture){
+void Asteroid::drawEffects(Texture2D &p_particleTexture){
     Color particleColor = GRAY;
     if(m_shieldActive) particleColor = SKYBLUE;
     else if(m_metal) particleColor = {240, (unsigned char)(240 - m_heat/10), (unsigned char)(240 - m_heat/10), 255};

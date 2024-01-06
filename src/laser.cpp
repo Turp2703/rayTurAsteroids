@@ -60,7 +60,7 @@ void Laser::draw(){
     
     //DrawRectangleRec(getHitBox(), BLUE);
 }
-void Laser::draw(Texture2D p_texture){
+void Laser::draw(Texture2D &p_texture){
     DrawTexturePro( p_texture
                   , { 0.f, 0.f, (float)p_texture.width, (float)p_texture.height }
                   , { m_position.x, m_position.y, p_texture.width * 2.f, p_texture.height * 2.f }

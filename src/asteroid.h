@@ -14,8 +14,8 @@ class Asteroid{
         Asteroid& operator=(Asteroid&&) noexcept;
         void update(int&, std::vector<Particle>&);
         void draw();
-        void draw(Texture2D, Texture2D, Texture2D);
-        void drawEffects(Texture2D);
+        void draw(Texture2D&, Texture2D&, Texture2D&);
+        void drawEffects(Texture2D&);
         Rectangle getHitBox();
         void destroy(int&);
         bool isAlive();

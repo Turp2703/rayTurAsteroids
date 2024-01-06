@@ -12,7 +12,7 @@ class ShockwaveManager{
         ShockwaveManager();
         void update();
         void draw();
-        void draw(Texture2D);
+        void draw(Texture2D&);
         void drawIndicators();
         void spawnShockwave(Vector2, int, int);
         void checkCollisions(std::vector<Asteroid>&);

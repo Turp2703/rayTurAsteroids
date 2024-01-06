@@ -88,9 +88,6 @@ void SceneGame::draw(){
     portalManager.drawEffects(texParticle);
     for(auto& particle : m_asteroidParticles)
         particle.draw(texParticle, LIGHTGRAY, true);
-    for(int i = 0; i < m_asteroidParticles.size(); i++)
-        DrawCircle(i, i, 2, WHITE);
-    
     for(auto& asteroid : asteroids)
         asteroid.drawEffects(texParticle);
     
@@ -137,6 +134,7 @@ SceneGame::~SceneGame(){
     UnloadTexture(texAsteroid);
     UnloadTexture(texMetal);
     UnloadTexture(texShield);
+    UnloadTexture(texParticle);
     for(int i = 0; i < (int)(sizeof(texFlames) / sizeof (texFlames[0])); i++)
         UnloadTexture(texFlames[i]);
     for(int i = 0; i < (int)(sizeof(texBackground) / sizeof (texBackground[0])); i++)

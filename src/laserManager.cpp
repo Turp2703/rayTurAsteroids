@@ -27,7 +27,7 @@ void LaserManager::draw(){
     // for(unsigned int i = 0; i < m_lasers.size(); i++)
         // DrawText(std::to_string(m_lasers[i].m_lifeTime).c_str(), 10, 10*(i+1), 10, WHITE);
 }
-void LaserManager::draw(Texture2D p_texture){
+void LaserManager::draw(Texture2D &p_texture){
     for(Laser laser : m_lasers)
         laser.draw(p_texture);
 }

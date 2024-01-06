@@ -11,7 +11,7 @@ class Flame : public Projectile{
         Flame& operator=(Flame&&) noexcept;
         void update();
         void draw();
-        void draw(Texture2D[]);
+        void draw(Texture2D(&)[4]);
         bool isAlive();
         Rectangle getHitBox();
         void destroy();

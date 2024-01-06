@@ -14,8 +14,8 @@ class Portal{
         Portal& operator=(Portal&&) noexcept;
         void update(std::vector<Asteroid>&);
         void draw();
-        void draw(Texture2D);
-        void drawEffects(Texture2D);
+        void draw(Texture2D&);
+        void drawEffects(Texture2D&);
         bool isAlive();
     private:
         const Vector2 k_size = { 40.f, 60.f }; // 40, 60

@@ -37,7 +37,7 @@ void Shockwave::update(){
 void Shockwave::draw(){
     DrawCircleV(m_position, k_size, SKYBLUE);
 }
-void Shockwave::draw(Texture2D p_texture){
+void Shockwave::draw(Texture2D &p_texture){
     //DrawCircleV(m_position, k_size, RED);
     //DrawText(std::to_string(p_texture.width).c_str(), 10, 10, 20, WHITE);
     DrawTextureEx(p_texture, {m_position.x - (p_texture.width * 6.5f) / 2, m_position.y - (p_texture.height * 6.5f) / 2}, 0.f, 6.5f , WHITE);

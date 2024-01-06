@@ -30,11 +30,11 @@ void PortalManager::draw(){
     // for(unsigned int i = 0; i < m_portals.size(); i++)
         // DrawText(std::to_string(0).c_str(), 10 * i, 30, 20, WHITE);
 }
-void PortalManager::draw(Texture2D p_texture){
+void PortalManager::draw(Texture2D &p_texture){
     for(auto& portal : m_portals)
         portal.draw(p_texture);
 }
-void PortalManager::drawEffects(Texture2D p_particleTexture){
+void PortalManager::drawEffects(Texture2D &p_particleTexture){
     for(auto& portal : m_portals)
         portal.drawEffects(p_particleTexture);
 }

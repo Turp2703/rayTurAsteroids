@@ -57,7 +57,7 @@ void Particle::update(){
     m_position = endPos;
 }
 
-void Particle::draw(Texture2D& p_particleTexture, Color p_color, bool p_endGlow){
+void Particle::draw(Texture2D &p_particleTexture, Color p_color, bool p_endGlow){
     DrawTexturePro( p_particleTexture
                   , { 0.f, 0.f, (float)p_particleTexture.width, (float)p_particleTexture.height }
                   , { m_position.x, m_position.y, (float)p_particleTexture.width, (float)p_particleTexture.height }

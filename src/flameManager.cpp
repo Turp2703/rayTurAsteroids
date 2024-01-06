@@ -39,7 +39,7 @@ void FlameManager::draw(){
     // for(unsigned int i = 0; i < m_flames.size(); i++)
         // DrawCircle(10.0f, i*10.0f, 3.0f, GREEN);
 }
-void FlameManager::draw(Texture2D p_texture[4]){
+void FlameManager::draw(Texture2D (&p_texture)[4]){
     for(Flame flame: m_flames)
         flame.draw(p_texture);
 }

@@ -34,7 +34,7 @@ void ShockwaveManager::draw(){
     // for(unsigned int i = 0; i < k_charges; i++)
         // DrawText(std::to_string(m_charges[i]).c_str(), 30, 20 * (i + 1), 20, WHITE);
 }
-void ShockwaveManager::draw(Texture2D p_texture){
+void ShockwaveManager::draw(Texture2D& p_texture){
     for(Shockwave shockwave: m_shockwaves)
         shockwave.draw(p_texture);
 }

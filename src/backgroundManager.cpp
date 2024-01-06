@@ -36,7 +36,7 @@ void BackgroundManager::update(){
     }
 }
 
-void BackgroundManager::draw(Texture2D p_texture[7]){
+void BackgroundManager::draw(Texture2D (&p_texture)[7]){
     for(int i = 0; i < k_width; i++){
         for(int j = -1; j < k_height - 1; j++){
             DrawTextureEx(p_texture[m_grid[i][j + 1]], {i*32.f, j*32.f + m_movement}, 0.f, 2.f, WHITE);

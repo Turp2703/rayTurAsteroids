@@ -11,7 +11,7 @@ class Laser : public Projectile{
         Laser& operator=(Laser&&) noexcept;
         void update();
         void draw();
-        void draw(Texture2D);
+        void draw(Texture2D&);
         bool isAlive();
         Rectangle getHitBox();
         void destroy();

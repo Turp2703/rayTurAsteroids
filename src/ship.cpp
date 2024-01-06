@@ -137,7 +137,7 @@ void Ship::draw(){
         DrawCircle(m_hitBox.x, m_hitBox.y, m_hitBox.z, ORANGE);
     }
 }
-void Ship::draw(Texture2D p_texture){
+void Ship::draw(Texture2D &p_texture){
     if(m_alive){
         DrawTexturePro( p_texture
                       , { 0.f, 0.f, (float)p_texture.width, (float)p_texture.height }
@@ -153,7 +153,7 @@ void Ship::draw(Texture2D p_texture){
     }
 }
 
-void Ship::drawEffects(Texture2D p_particleTexture){
+void Ship::drawEffects(Texture2D &p_particleTexture){
     for(auto& particle : m_fireParticles)
         particle.draw(p_particleTexture, ORANGE, false);
     for(auto& particle : m_deathParticles)

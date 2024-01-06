@@ -14,8 +14,8 @@ class Ship{
         Ship(int, int, LaserManager&, FlameManager&, ShockwaveManager&);
         void update();
         void draw();
-        void draw(Texture2D);
-        void drawEffects(Texture2D);
+        void draw(Texture2D&);
+        void drawEffects(Texture2D&);
         Vector3 getHitBox();
         bool isAlive();
         void kill();
