@@ -71,12 +71,12 @@ void SceneGame::update(Game* p_game){
             portalManager.spawnPortal((Vector2){(float)GetRandomValue(50, m_screenWidth-50),(float)GetRandomValue(50, m_screenHeight-100)});
         }
         else if(IsKeyPressed(KEY_T)){
-            /* */
+            p_game->changeScene(new SceneMenu(m_screenWidth, m_screenHeight));
         }
     }
     
-    if(IsKeyPressed(KEY_ONE))
-        p_game->changeScene(new SceneMenu(m_screenWidth, m_screenHeight));
+    // if(IsKeyPressed(KEY_ONE))
+        // p_game->changeScene(new SceneMenu(m_screenWidth, m_screenHeight));
 }
 
 void SceneGame::draw(){
