@@ -10,5 +10,6 @@ class BackgroundManager{
     private:
         const int k_width = 26;
         const int k_height = 19;
+        float m_movement;
         int m_grid[26][19];
 };
