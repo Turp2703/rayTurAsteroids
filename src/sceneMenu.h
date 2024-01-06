@@ -14,4 +14,6 @@ class SceneMenu : public Scene{
         const Rectangle button = { 300, 225, 200, 100 };
         Texture2D texLogo;
         bool mouseOverButton;
+        bool transitioning;
+        unsigned char alpha;
 };

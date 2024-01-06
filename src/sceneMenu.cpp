@@ -13,15 +13,23 @@ SceneMenu::SceneMenu(int p_screenWidth, int p_screenHeight)
     texLogo = LoadTexture("assets/logo.png");
     
     mouseOverButton = false;
+    transitioning = false;
+    alpha = 0;
 }
 
 void SceneMenu::update(Game* p_game){
     // if(IsKeyPressed(KEY_TWO))
         // p_game->changeScene(new SceneGame(m_screenWidth, m_screenHeight));
-    
     mouseOverButton = CheckCollisionPointRec(GetMousePosition(), button);
-    if(mouseOverButton && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-        p_game->changeScene(new SceneGame(m_screenWidth, m_screenHeight));
+    if(transitioning){
+        if(alpha < 252)
+            alpha += 3;
+        else
+            p_game->changeScene(new SceneGame(m_screenWidth, m_screenHeight));
+    }
+    else if(mouseOverButton && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+        transitioning = true;
+    }
 }
 
 void SceneMenu::draw(){
@@ -55,6 +63,9 @@ void SceneMenu::draw(){
     DrawText("[J] to fire lasers", 435, 500, 18, GREEN);
     DrawText("[K] to use flamethrower", 435, 520, 18, GREEN);
     DrawText("[L] to use electric shock", 435, 540, 18, GREEN);
+    
+    if(transitioning)
+        DrawRectangle(0, 0, m_screenWidth, m_screenHeight, { 0, 0, 0, alpha } );
 }
 
 SceneMenu::~SceneMenu(){
