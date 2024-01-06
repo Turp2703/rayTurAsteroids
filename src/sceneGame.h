@@ -38,4 +38,6 @@ class SceneGame : public Scene{
         Texture2D texShield;
         Texture2D texBackground[7];
         Texture2D texParticle;
+        
+        std::vector<Particle> m_asteroidParticles;
 };

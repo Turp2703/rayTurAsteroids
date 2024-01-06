@@ -34,7 +34,7 @@ void SceneGame::update(Game* p_game){
     flameManager.update();
     shockwaveManager.update();
     for(auto& asteroid : asteroids)
-        asteroid.update(score);
+        asteroid.update(score, m_asteroidParticles);
     for (auto it = asteroids.begin(); it != asteroids.end();)
         if (!it->isAlive())
             it = asteroids.erase(it);
@@ -46,6 +46,17 @@ void SceneGame::update(Game* p_game){
     shockwaveManager.checkCollisions(asteroids);
     portalManager.update(asteroids, score);
     backgroundManager.update();
+    
+    // Particles
+    for (auto it = m_asteroidParticles.begin(); it != m_asteroidParticles.end();){
+        if (!it->isAlive()){
+            it = m_asteroidParticles.erase(it);
+        }
+        else {
+            it->update();
+            it++;
+        }
+    }
     
     // GAME OVER
     if(!player.isAlive()){
@@ -66,45 +77,6 @@ void SceneGame::update(Game* p_game){
     
     if(IsKeyPressed(KEY_ONE))
         p_game->changeScene(new SceneMenu(m_screenWidth, m_screenHeight));
-    
-    // // Asteroid debug
-    // if(IsKeyPressed(KEY_P)){
-        // asteroids.push_back(Asteroid(m_screenWidth, m_screenHeight));
-    // }
-    // if(IsKeyPressed(KEY_O)){
-        // Asteroid ast = Asteroid(m_screenWidth, m_screenHeight);
-        // ast.toggleMetal();
-        // asteroids.push_back(ast);
-    // }
-    // if(IsKeyPressed(KEY_I)){
-        // Asteroid ast = Asteroid(m_screenWidth, m_screenHeight);
-        // ast.toggleShield();
-        // ast.enableShieldActive();
-        // asteroids.push_back(ast);
-    // }
-    // if(IsKeyPressed(KEY_U)){
-        // Asteroid ast = Asteroid(m_screenWidth, m_screenHeight);
-        // ast.toggleMetal();
-        // ast.toggleShield();
-        // ast.enableShieldActive();
-        // asteroids.push_back(ast);
-    // }
-    // if(IsKeyDown(KEY_Y)){
-        // // Vector2 pos = { (float)GetRandomValue(0, m_screenWidth), (float)GetRandomValue(0, m_screenHeight) };
-        // Vector2 pos = { m_screenWidth / 2.f, m_screenHeight / 2.f };
-        // float size = GetRandomValue(15, 40);
-        // float speed = GetRandomValue(5, 20) / 10.0f;
-        // float angle = GetRandomValue(0, 359);
-        // bool metal = GetRandomValue(0, 1);
-        // bool shield = GetRandomValue(0, 1);
-        // Asteroid ast(m_screenWidth, k_screenHeight, pos, size, speed, angle, metal, shield);
-        // asteroids.push_back(ast);
-    // }
-    // // Portal Debug
-    // if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-        // portalManager.spawnPortal( {(float)GetMouseX(), (float)GetMouseY() });
-    // if(IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
-        // asteroids.clear();
 }
 
 void SceneGame::draw(){
@@ -114,6 +86,13 @@ void SceneGame::draw(){
     // Effects
     player.drawEffects(texParticle);
     portalManager.drawEffects(texParticle);
+    for(auto& particle : m_asteroidParticles)
+        particle.draw(texParticle, LIGHTGRAY, true);
+    for(int i = 0; i < m_asteroidParticles.size(); i++)
+        DrawCircle(i, i, 2, WHITE);
+    
+    for(auto& asteroid : asteroids)
+        asteroid.drawEffects(texParticle);
     
     // Objects
     laserManager.draw(texLaser);

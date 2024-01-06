@@ -5,7 +5,7 @@
 class Particle{
     public:
         Particle(Vector2, float, double);
-        Particle(Vector2, float, double, float);
+        Particle(Vector2, float, double, float, float);
         Particle(const Particle&);
         Particle& operator=(Particle&&) noexcept;
         void update();

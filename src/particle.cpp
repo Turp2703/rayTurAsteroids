@@ -13,12 +13,12 @@ Particle::Particle(Vector2 p_pos, float p_angle, double p_maxTime)
     m_startTime = GetTime();
     m_speed = GetRandomValue(20, 40) / 10.f;
 }
-Particle::Particle(Vector2 p_pos, float p_angle, double p_maxTime, float p_angleIncrement)
+Particle::Particle(Vector2 p_pos, float p_angle, double p_maxTime, float p_angleIncrement, float p_speed)
     : m_position(p_pos), m_angle(p_angle), m_maxTime(p_maxTime), m_angleIncrement(p_angleIncrement)
 {
     m_alive = true;
     m_startTime = GetTime();
-    m_speed = 10.f;
+    m_speed = p_speed;
 }
 
 // Copy constructor

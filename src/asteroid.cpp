@@ -23,6 +23,7 @@ Asteroid::Asteroid(int p_screenWidth, int p_screenHeight){
     m_shield = false;
     m_shieldActive = false;
     m_shieldLossTime = GetTime();
+    m_shouldParticleDestroyed = false;
 }
 Asteroid::Asteroid(int p_screenWidth, int p_screenHeight, Vector2 p_position, float p_size, float p_speed, float p_angle, bool p_metal, bool p_shield)
     : m_position(p_position), m_size(p_size), m_speed(p_speed), m_angle(p_angle), m_metal(p_metal), m_shield(p_shield)
@@ -35,6 +36,7 @@ Asteroid::Asteroid(int p_screenWidth, int p_screenHeight, Vector2 p_position, fl
     m_heat = 0;
     m_shieldActive = m_shield;
     m_shieldLossTime = GetTime();
+    m_shouldParticleDestroyed = false;
 }
 
 // Copy Constructor
@@ -44,6 +46,7 @@ Asteroid::Asteroid(const Asteroid& other)
     , m_radAngle(other.m_radAngle), m_hitBox(other.m_hitBox), m_alive(other.m_alive)
     , m_metal(other.m_metal), m_heat(other.m_heat), m_shield(other.m_shield)
     , m_shieldActive(other.m_shieldActive), m_shieldLossTime(other.m_shieldLossTime)
+    , m_shouldParticleDestroyed(other.m_shouldParticleDestroyed)
 {
     /* */
 }
@@ -65,11 +68,29 @@ Asteroid& Asteroid::operator=(Asteroid&& other) noexcept {
         m_shield = std::exchange(other.m_shield, false);
         m_shieldActive = std::exchange(other.m_shieldActive, false);
         m_shieldLossTime = std::exchange(other.m_shieldLossTime, 0.0);
+        m_shouldParticleDestroyed = std::exchange(other.m_shouldParticleDestroyed, false);
     }
     return *this;
 }
 
-void Asteroid::update(int& p_score){
+void Asteroid::update(int& p_score, std::vector<Particle>& p_asteroidParticles){
+    // Particles
+    if(m_shouldParticleDestroyed){
+        for(int i = 0; i < GetRandomValue(4, 8); i++)
+            p_asteroidParticles.push_back(Particle(m_position, (float)GetRandomValue(45, 75) * i, m_size / 50));
+        m_shouldParticleDestroyed = false;
+    }
+    m_particles.push_back(Particle(m_position, 360 - m_angle + GetRandomValue(-5, 5), 0.3));
+    for (auto it = m_particles.begin(); it != m_particles.end();){
+        if (!it->isAlive()){
+            it = m_particles.erase(it);
+        }
+        else {
+            it->update();
+            it++;
+        }
+    }
+
     // Calculate pos
     m_radAngle = m_angle * DEG2RAD;
     Vector2 endPos = {
@@ -92,6 +113,7 @@ void Asteroid::update(int& p_score){
             m_heat = 0;
             p_score += 5;
             m_metal = false;
+                                // METAL PARTICLE
         }
         else if(m_heat - k_heatDecrease >= 0){
             m_heat -= k_heatDecrease;
@@ -155,6 +177,13 @@ void Asteroid::draw(Texture2D p_asteroid, Texture2D p_metal, Texture2D p_shield)
     
     // DrawRectangleRec(m_hitBox, RED);
 }
+void Asteroid::drawEffects(Texture2D p_particleTexture){
+    Color particleColor = GRAY;
+    if(m_shieldActive) particleColor = SKYBLUE;
+    else if(m_metal) particleColor = {240, (unsigned char)(240 - m_heat/10), (unsigned char)(240 - m_heat/10), 255};
+    for(auto& particle : m_particles)
+        particle.draw(p_particleTexture, particleColor, true);
+}
 
 Rectangle Asteroid::getHitBox(){
     return m_hitBox;
@@ -163,6 +192,7 @@ Rectangle Asteroid::getHitBox(){
 void Asteroid::destroy(int& p_score){
     m_alive = false;
     p_score += 20;
+    m_shouldParticleDestroyed = true;
 }
 
 bool Asteroid::isAlive(){

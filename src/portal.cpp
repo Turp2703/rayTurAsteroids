@@ -59,7 +59,7 @@ void Portal::update(std::vector<Asteroid>& p_asteroids){
     
     // Particles
     for(int i = 0; i < 6; i++){
-        m_particles.push_back(Particle(center, 60.f * i, GetRandomValue(5, 20) / 100.f, 20.f));
+        m_particles.push_back(Particle(center, (float)GetRandomValue(45, 75) * i, GetRandomValue(5, 20) / 100.f, GetRandomValue(2, 10) / 10.f, GetRandomValue(30, 60) / 10.f));
     }
     for (auto it = m_particles.begin(); it != m_particles.end();){
         if (!it->isAlive()){
@@ -103,7 +103,7 @@ void Portal::draw(Texture2D p_texture){
 }
 void Portal::drawEffects(Texture2D p_particleTexture){
     for(auto& particle : m_particles)
-        particle.draw(p_particleTexture, PURPLE, true);
+        particle.draw(p_particleTexture, PURPLE, false);
 }
 
 bool Portal::isAlive(){

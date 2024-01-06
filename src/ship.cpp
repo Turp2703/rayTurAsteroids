@@ -149,7 +149,7 @@ void Ship::draw(Texture2D p_texture){
         // DrawCircleV({m_position.x+cos(m_radAngle)*m_size*1.5f,m_position.y+sin(m_radAngle)*m_size*1.5f}, 3.0f, WHITE);
         // DrawCircleV(m_position, 3.0f, RED);
         // DrawCircle(m_hitBox.x, m_hitBox.y, m_hitBox.z, RED);
-        DrawText(std::to_string(m_angle).c_str(), 10, 10, 20, WHITE);
+        // DrawText(std::to_string(m_angle).c_str(), 10, 10, 20, WHITE);
     }
 }
 
@@ -171,9 +171,9 @@ bool Ship::isAlive(){
 void Ship::kill(){
     m_alive = false;
     for(int i = 0; i < 12; i++){
-        m_deathParticles.push_back(Particle(m_position, 25.f * i, 1.5f, 1.5f));
-        m_deathParticles.push_back(Particle(m_position, 30.f * i, 1.5f, 2.f));
-        m_deathParticles.push_back(Particle(m_position, 35.f * i, 1.5f, 2.5f));
+        m_deathParticles.push_back(Particle(m_position, 25.f * i, 1.5f, 1.5f, 10.f));
+        m_deathParticles.push_back(Particle(m_position, 30.f * i, 1.5f, 2.f , 10.f));
+        m_deathParticles.push_back(Particle(m_position, 35.f * i, 1.5f, 2.5f, 10.f));
     }
 }
 

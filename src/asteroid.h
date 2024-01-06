@@ -1,6 +1,10 @@
 #pragma once
 
+#include "particle.h"
+
 #include "raylib.h"
+
+#include <vector>
 
 class Asteroid{
     public:
@@ -8,9 +12,10 @@ class Asteroid{
         Asteroid(int, int, Vector2, float, float, float, bool, bool);
         Asteroid(const Asteroid&);
         Asteroid& operator=(Asteroid&&) noexcept;
-        void update(int&);
+        void update(int&, std::vector<Particle>&);
         void draw();
         void draw(Texture2D, Texture2D, Texture2D);
+        void drawEffects(Texture2D);
         Rectangle getHitBox();
         void destroy(int&);
         bool isAlive();
@@ -40,4 +45,6 @@ class Asteroid{
         bool m_shield;
         bool m_shieldActive;
         double m_shieldLossTime;
+        std::vector<Particle> m_particles;
+        bool m_shouldParticleDestroyed;
 };
