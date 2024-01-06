@@ -3,15 +3,19 @@
 #include "laserManager.h"
 #include "flameManager.h"
 #include "shockwaveManager.h"
+#include "particle.h"
 
 #include "raylib.h"
+
+#include <vector>
 
 class Ship{
     public:
         Ship(int, int, LaserManager&, FlameManager&, ShockwaveManager&);
         void update();
         void draw();
-        void draw(Texture2D, Texture2D);
+        void draw(Texture2D);
+        void drawEffects(Texture2D);
         Vector3 getHitBox();
         bool isAlive();
         void kill();
@@ -34,4 +38,6 @@ class Ship{
         FlameManager& m_flameManager;
         ShockwaveManager& m_shockwaveManager;
         Vector3 m_hitBox; // Circle, Position-Radius
+        std::vector<Particle> m_fireParticles;
+        std::vector<Particle> m_deathParticles;
 };

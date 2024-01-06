@@ -55,11 +55,26 @@ Portal& Portal::operator=(Portal&& other) noexcept {
 }
 
 void Portal::update(std::vector<Asteroid>& p_asteroids){
+    Vector2 center = {m_position.x + k_size.x / 2, m_position.y + k_size.y / 2};
+    
+    // Particles
+    for(int i = 0; i < 6; i++){
+        m_particles.push_back(Particle(center, 60.f * i, GetRandomValue(5, 20) / 100.f, 20.f));
+    }
+    for (auto it = m_particles.begin(); it != m_particles.end();){
+        if (!it->isAlive()){
+            it = m_particles.erase(it);
+        }
+        else {
+            it->update();
+            it++;
+        }
+    }
+    
     double currentTime = GetTime();
     if(m_active){
+        // Asteroids
         if(currentTime - m_previousTime >= m_interval){
-            Vector2 center = {m_position.x + k_size.x / 2, m_position.y + k_size.y / 2};
-        
             float extraAngle = 360 / m_groupSize;
             for(int i = 0; i < m_groupSize; i++){
                 Asteroid ast(m_screenWidth, m_screenHeight, center, m_size, m_speed, m_angle + i * extraAngle, m_metals,    m_shields);
@@ -85,6 +100,10 @@ void Portal::draw(){
 }
 void Portal::draw(Texture2D p_texture){
     DrawTextureEx(p_texture, m_position, 0.f, 2.f, WHITE);
+}
+void Portal::drawEffects(Texture2D p_particleTexture){
+    for(auto& particle : m_particles)
+        particle.draw(p_particleTexture, PURPLE, true);
 }
 
 bool Portal::isAlive(){

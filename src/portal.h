@@ -1,6 +1,7 @@
 #pragma once
 
 #include "asteroid.h"
+#include "particle.h"
 
 #include "raylib.h"
 
@@ -14,6 +15,7 @@ class Portal{
         void update(std::vector<Asteroid>&);
         void draw();
         void draw(Texture2D);
+        void drawEffects(Texture2D);
         bool isAlive();
     private:
         const Vector2 k_size = { 40.f, 60.f }; // 40, 60
@@ -34,4 +36,5 @@ class Portal{
         bool m_alive;
         double m_startTime;
         bool m_active;
+        std::vector<Particle> m_particles;
 };

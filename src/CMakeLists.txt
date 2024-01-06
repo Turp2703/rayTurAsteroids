@@ -33,7 +33,7 @@ if (NOT raylib_FOUND) # If there's none, fetch and build raylib
 endif()
 
 # Our Project
-add_executable(${PROJECT_NAME} main.cpp game.cpp ship.cpp projectile.cpp laser.cpp laserManager.cpp asteroid.cpp flame.cpp flameManager.cpp shockwave.cpp shockwaveManager.cpp portal.cpp portalManager.cpp scene.cpp sceneGame.cpp sceneMenu.cpp backgroundManager.cpp)
+add_executable(${PROJECT_NAME} main.cpp game.cpp ship.cpp projectile.cpp laser.cpp laserManager.cpp asteroid.cpp flame.cpp flameManager.cpp shockwave.cpp shockwaveManager.cpp portal.cpp portalManager.cpp scene.cpp sceneGame.cpp sceneMenu.cpp backgroundManager.cpp particle.cpp)
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)
 

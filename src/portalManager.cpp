@@ -34,6 +34,10 @@ void PortalManager::draw(Texture2D p_texture){
     for(auto& portal : m_portals)
         portal.draw(p_texture);
 }
+void PortalManager::drawEffects(Texture2D p_particleTexture){
+    for(auto& portal : m_portals)
+        portal.drawEffects(p_particleTexture);
+}
 
 void PortalManager::spawnPortal(Vector2 p_position){
     bool shield = GetRandomValue(0, 1);

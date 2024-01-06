@@ -26,10 +26,35 @@ Ship::Ship(int p_screenWidth, int p_screenHeight
 
 
 void Ship::update(){
+    // Update Particles
+    for (auto it = m_fireParticles.begin(); it != m_fireParticles.end();){
+        if (!it->isAlive()){
+            it = m_fireParticles.erase(it);
+        }
+        else {
+            it->update();
+            it++;
+        }
+    }
+    for (auto it = m_deathParticles.begin(); it != m_deathParticles.end();){
+        if (!it->isAlive()){
+            it = m_deathParticles.erase(it);
+        }
+        else {
+            it->update();
+            it++;
+        }
+    }
+    
     if(m_alive){
         // WASD Keys
             // bool aDown = IsKeyDown(KEY_LEFT), dDown = IsKeyDown(KEY_RIGHT), wDown = IsKeyDown(KEY_UP), sDown = IsKeyDown(KEY_DOWN);
         bool aDown = IsKeyDown(KEY_A), dDown = IsKeyDown(KEY_D), wDown = IsKeyDown(KEY_W), sDown = IsKeyDown(KEY_S);
+        
+        // Fire Particles
+        if(wDown){
+            m_fireParticles.push_back(Particle(m_position, 360 - m_angle + GetRandomValue(-15, 15), 0.3));
+        }
         
         // Change angle
         if     ( aDown && !dDown){
@@ -111,11 +136,8 @@ void Ship::draw(){
     else{
         DrawCircle(m_hitBox.x, m_hitBox.y, m_hitBox.z, ORANGE);
     }
-    
-    // DrawCircle(m_hitBox.x, m_hitBox.y, m_hitBox.z, RED);
-    // DrawText(std::to_string(m_alive).c_str(), 10, 10, 20, WHITE);
 }
-void Ship::draw(Texture2D p_texture, Texture2D p_textureDead){
+void Ship::draw(Texture2D p_texture){
     if(m_alive){
         DrawTexturePro( p_texture
                       , { 0.f, 0.f, (float)p_texture.width, (float)p_texture.height }
@@ -127,15 +149,15 @@ void Ship::draw(Texture2D p_texture, Texture2D p_textureDead){
         // DrawCircleV({m_position.x+cos(m_radAngle)*m_size*1.5f,m_position.y+sin(m_radAngle)*m_size*1.5f}, 3.0f, WHITE);
         // DrawCircleV(m_position, 3.0f, RED);
         // DrawCircle(m_hitBox.x, m_hitBox.y, m_hitBox.z, RED);
+        DrawText(std::to_string(m_angle).c_str(), 10, 10, 20, WHITE);
     }
-    else{
-        DrawTexturePro( p_textureDead
-                      , { 0.f, 0.f, (float)p_textureDead.width, (float)p_textureDead.height }
-                      , { m_position.x, m_position.y, (float)p_textureDead.width * 2.f, (float)p_textureDead.height * 2.f }
-                      , { (float)p_textureDead.width, (float)p_textureDead.height}
-                      , m_angle
-                      , WHITE);
-    }
+}
+
+void Ship::drawEffects(Texture2D p_particleTexture){
+    for(auto& particle : m_fireParticles)
+        particle.draw(p_particleTexture, ORANGE, false);
+    for(auto& particle : m_deathParticles)
+        particle.draw(p_particleTexture, WHITE, false);
 }
 
 Vector3 Ship::getHitBox(){
@@ -148,12 +170,18 @@ bool Ship::isAlive(){
 
 void Ship::kill(){
     m_alive = false;
+    for(int i = 0; i < 12; i++){
+        m_deathParticles.push_back(Particle(m_position, 25.f * i, 1.5f, 1.5f));
+        m_deathParticles.push_back(Particle(m_position, 30.f * i, 1.5f, 2.f));
+        m_deathParticles.push_back(Particle(m_position, 35.f * i, 1.5f, 2.5f));
+    }
 }
 
 void Ship::checkCollisions(std::vector<Asteroid>& p_asteroids){
-    for(auto& asteroid : p_asteroids)
-        if(asteroid.isAlive() && CheckCollisionCircleRec({m_hitBox.x, m_hitBox.y}, m_hitBox.z, asteroid.getHitBox()))
-            kill();
+    if(m_alive)
+        for(auto& asteroid : p_asteroids)
+            if(asteroid.isAlive() && CheckCollisionCircleRec({m_hitBox.x, m_hitBox.y}, m_hitBox.z, asteroid.getHitBox()))
+                kill();
 }
 
 void Ship::restart(){

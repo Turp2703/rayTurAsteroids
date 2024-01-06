@@ -29,7 +29,6 @@ class SceneGame : public Scene{
         int score;
         
         Texture2D texShip;
-        Texture2D texShipDead;
         Texture2D texLaser;
         Texture2D texShockwave;
         Texture2D texFlames[4];
@@ -38,4 +37,5 @@ class SceneGame : public Scene{
         Texture2D texMetal;
         Texture2D texShield;
         Texture2D texBackground[7];
+        Texture2D texParticle;
 };
