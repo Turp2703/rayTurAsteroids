@@ -61,7 +61,13 @@ void Flame::draw(Texture2D p_texture[4]){
     if(m_size > 11) n = 3;
     else if(m_size > 7) n = 2;
     else if(m_size > 3) n = 1;
-    DrawTextureEx(p_texture[n], m_position, m_radAngle * RAD2DEG, 2.f, WHITE);
+    
+    DrawTexturePro( p_texture[n]
+                  , { 0.f, 0.f, (float)p_texture[n].width, (float)p_texture[n].height }
+                  , { m_position.x, m_position.y, p_texture[n].width * 2.f, p_texture[n].height * 2.f }
+                  , { (float)p_texture[n].width, (float)p_texture[n].height }
+                  , m_radAngle * RAD2DEG
+                  , WHITE);
 }
 
 bool Flame::isAlive(){

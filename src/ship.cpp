@@ -85,10 +85,11 @@ void Ship::update(){
         m_hitBox = {m_position.x, m_position.y, m_size};
         
         // Attacks
-        if(IsKeyPressed(KEY_J))
-            m_laserManager.spawnLaser(m_position, m_radAngle, m_horizontalLimit, m_verticalLimit);
+        Vector2 origin = {m_position.x + cos(m_radAngle) * m_size*1.5f, m_position.y + sin(m_radAngle) * m_size*1.5f};
+        if(IsKeyPressed(KEY_J)){
+            m_laserManager.spawnLaser(origin, m_radAngle, m_horizontalLimit, m_verticalLimit);
+        }
         if(IsKeyDown(KEY_K)){
-            Vector2 origin = {m_position.x + cos(m_radAngle) * m_size*1.5f, m_position.y + sin(m_radAngle) * m_size*1.5f};
             m_flameManager.spawnFlame(origin, m_radAngle, m_horizontalLimit, m_verticalLimit);
             m_flameManager.spawnFlame(origin, m_radAngle, m_horizontalLimit, m_verticalLimit);
         }
@@ -116,14 +117,24 @@ void Ship::draw(){
 }
 void Ship::draw(Texture2D p_texture, Texture2D p_textureDead){
     if(m_alive){
-        Vector2 p1 = {m_position.x + cos(m_radAngle) * m_size * 1.5f, m_position.y + sin(m_radAngle) * m_size * 1.5f};
-        DrawCircleV(p1, 3.0f, WHITE);
-        DrawCircleV(m_position, 3.0f, RED);
+        DrawTexturePro( p_texture
+                      , { 0.f, 0.f, (float)p_texture.width, (float)p_texture.height }
+                      , { m_position.x, m_position.y, (float)p_texture.width, (float)p_texture.height }
+                      , { p_texture.width / 2.f, p_texture.height / 2.f }
+                      , m_angle
+                      , WHITE);
         
-        DrawTextureEx(p_texture, {m_position.x - p_texture.width / 2, m_position.y - p_texture.height / 2}, 0, 1.f, WHITE);
+        // DrawCircleV({m_position.x+cos(m_radAngle)*m_size*1.5f,m_position.y+sin(m_radAngle)*m_size*1.5f}, 3.0f, WHITE);
+        // DrawCircleV(m_position, 3.0f, RED);
+        // DrawCircle(m_hitBox.x, m_hitBox.y, m_hitBox.z, RED);
     }
     else{
-        DrawTextureEx(p_textureDead, m_position, m_angle, 2.f, WHITE);
+        DrawTexturePro( p_textureDead
+                      , { 0.f, 0.f, (float)p_textureDead.width, (float)p_textureDead.height }
+                      , { m_position.x, m_position.y, (float)p_textureDead.width * 2.f, (float)p_textureDead.height * 2.f }
+                      , { (float)p_textureDead.width, (float)p_textureDead.height}
+                      , m_angle
+                      , WHITE);
     }
 }
 

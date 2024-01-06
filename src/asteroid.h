@@ -10,6 +10,7 @@ class Asteroid{
         Asteroid& operator=(Asteroid&&) noexcept;
         void update(int&);
         void draw();
+        void draw(Texture2D, Texture2D, Texture2D);
         Rectangle getHitBox();
         void destroy(int&);
         bool isAlive();

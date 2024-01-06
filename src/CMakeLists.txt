@@ -33,10 +33,13 @@ if (NOT raylib_FOUND) # If there's none, fetch and build raylib
 endif()
 
 # Our Project
-
-add_executable(${PROJECT_NAME} main.cpp game.cpp ship.cpp projectile.cpp laser.cpp laserManager.cpp asteroid.cpp flame.cpp flameManager.cpp shockwave.cpp shockwaveManager.cpp portal.cpp portalManager.cpp scene.cpp sceneGame.cpp sceneMenu.cpp)
+add_executable(${PROJECT_NAME} main.cpp game.cpp ship.cpp projectile.cpp laser.cpp laserManager.cpp asteroid.cpp flame.cpp flameManager.cpp shockwave.cpp shockwaveManager.cpp portal.cpp portalManager.cpp scene.cpp sceneGame.cpp sceneMenu.cpp backgroundManager.cpp)
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)
+
+# Assets Folder
+add_custom_target(copy_assets COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_LIST_DIR}/assets  ${CMAKE_CURRENT_BINARY_DIR}/assets)
+add_dependencies(${PROJECT_NAME} copy_assets)
 
 # Web Configurations
 if (${PLATFORM} STREQUAL "Web")

@@ -8,6 +8,7 @@
 #include "shockwaveManager.h"
 #include "asteroid.h"
 #include "portalManager.h"
+#include "backgroundManager.h"
 
 #include <vector>
 
@@ -24,6 +25,7 @@ class SceneGame : public Scene{
         ShockwaveManager shockwaveManager;
         std::vector<Asteroid> asteroids;
         PortalManager portalManager;
+        BackgroundManager backgroundManager;
         int score;
         
         Texture2D texShip;
@@ -32,4 +34,8 @@ class SceneGame : public Scene{
         Texture2D texShockwave;
         Texture2D texFlames[4];
         Texture2D texPortal;
+        Texture2D texAsteroid;
+        Texture2D texMetal;
+        Texture2D texShield;
+        Texture2D texBackground[7];
 };

@@ -2,6 +2,7 @@
 
 #include "sceneMenu.h"
 
+#include <iostream>
 #include <string>
 
 SceneGame::SceneGame(int p_screenWidth, int p_screenHeight)
@@ -12,20 +13,19 @@ SceneGame::SceneGame(int p_screenWidth, int p_screenHeight)
     score = 0;
     portalManager.spawnPortal((Vector2){(float)GetRandomValue(50, m_screenWidth-50),(float)GetRandomValue(50, m_screenHeight-100)});
     
-    
-    TraceLog(LOG_WARNING, GetApplicationDirectory());
-    
-    
     // Textures
     texShip = LoadTexture("assets/ship.png");
     texShipDead = LoadTexture("assets/shipDead.png");
     texLaser = LoadTexture("assets/laser.png");
     texShockwave = LoadTexture("assets/shockwave.png");
-    texFlames[0] = LoadTexture("assets/flame1.png");
-    texFlames[1] = LoadTexture("assets/flame2.png");
-    texFlames[2] = LoadTexture("assets/flame3.png");
-    texFlames[3] = LoadTexture("assets/flame4.png");
     texPortal = LoadTexture("assets/portal.png");
+    texAsteroid = LoadTexture("assets/asteroid.png");
+    texMetal = LoadTexture("assets/metal.png");
+    texShield= LoadTexture("assets/shield.png");
+    for(int i = 0; i < (int)(sizeof(texFlames) / sizeof (texFlames[0])); i++)
+        texFlames[i] = LoadTexture(("assets/flame" + std::to_string(i + 1) + ".png").c_str());
+    for(int i = 0; i < (int)(sizeof(texBackground) / sizeof (texBackground[0])); i++)
+        texBackground[i] = LoadTexture(("assets/bg" + std::to_string(i + 1) + ".png").c_str());
 }
 
 void SceneGame::update(Game* p_game){
@@ -45,6 +45,7 @@ void SceneGame::update(Game* p_game){
         else
             it++;
     portalManager.update(asteroids, score);
+    backgroundManager.update();
     
     // GAME OVER
     if(!player.isAlive()){
@@ -108,10 +109,13 @@ void SceneGame::update(Game* p_game){
 }
 
 void SceneGame::draw(){
-        // Objects
+    // Background
+    backgroundManager.draw(texBackground);
+    
+    // Objects
     laserManager.draw(texLaser);
     for(auto& asteroid : asteroids)
-        asteroid.draw();
+        asteroid.draw(texAsteroid, texMetal, texShield);
     flameManager.draw(texFlames);
     shockwaveManager.draw(texShockwave);
     portalManager.draw(texPortal);
@@ -148,7 +152,12 @@ SceneGame::~SceneGame(){
     UnloadTexture(texShipDead);
     UnloadTexture(texLaser);
     UnloadTexture(texShockwave);
-    for(int i = 0; i < 4; i++)
-        UnloadTexture(texFlames[i]);
     UnloadTexture(texPortal);
+    UnloadTexture(texAsteroid);
+    UnloadTexture(texMetal);
+    UnloadTexture(texShield);
+    for(int i = 0; i < (int)(sizeof(texFlames) / sizeof (texFlames[0])); i++)
+        UnloadTexture(texFlames[i]);
+    for(int i = 0; i < (int)(sizeof(texBackground) / sizeof (texBackground[0])); i++)
+        UnloadTexture(texBackground[i]);
 }

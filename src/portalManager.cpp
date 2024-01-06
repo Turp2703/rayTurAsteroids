@@ -54,7 +54,7 @@ void PortalManager::spawnPortal(Vector2 p_position){
     float angle = GetRandomValue(0, 359);
     float angleIncrement = GetRandomValue(0, 1) && GetRandomValue(0, 1) ? 0 : GetRandomValue(0, 90);
     float interval = GetRandomValue(1, 20) / 10.f;
-    float size = GetRandomValue(1, 3) * 15.f;
+    int size = GetRandomValue(1, 3) * 15.f;
     float speed = GetRandomValue(5, 20) / 10.f;
     
     Portal p1(p_position, groupCount, groupSize, angle, angleIncrement, interval, m_screenWidth, m_screenHeight, size, speed, metal, shield);

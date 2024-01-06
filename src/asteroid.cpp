@@ -115,6 +115,46 @@ void Asteroid::draw(){
     // DrawRectangleRec(m_hitBox, RED);
     // DrawText(std::to_string(m_heat).c_str(), 10, 30, 20, WHITE);
 }
+void Asteroid::draw(Texture2D p_asteroid, Texture2D p_metal, Texture2D p_shield){
+    float mult, div;
+    if(m_size > 35.f){ // Size 3
+        mult = 2.5f;
+        div = 0.8f;
+    }
+    else if(m_size < 25.f){ // Size 1
+        mult = 0.75f;
+        div = 3.f;
+    }
+    else{ // Size 2
+        mult = 1.25f;
+        div = 1.3f;
+    }
+    
+    DrawTexturePro( p_asteroid
+                  , { 0.f, 0.f, (float)p_asteroid.width, (float)p_asteroid.height }
+                  , { m_position.x, m_position.y, p_asteroid.width * mult, p_asteroid.height * mult}
+                  , { (float)p_asteroid.width / div, (float)p_asteroid.height / div }
+                  , m_angle
+                  , WHITE);
+                  
+    if(m_metal)
+        DrawTexturePro( p_metal
+                      , { 0.f, 0.f, (float)p_metal.width, (float)p_metal.height }
+                      , { m_position.x, m_position.y, p_metal.width * mult, p_metal.height * mult}
+                      , { (float)p_metal.width / div, (float)p_metal.height / div }
+                      , m_angle
+                      , {240, (unsigned char)(240 - m_heat/7.5f), (unsigned char)(240 - m_heat/7.5f), 255});
+        
+    if(m_shieldActive)
+        DrawTexturePro( p_shield
+                      , { 0.f, 0.f, (float)p_shield.width, (float)p_shield.height }
+                      , { m_position.x, m_position.y, p_shield.width * mult, p_shield.height * mult}
+                      , { (float)p_shield.width / div, (float)p_shield.height / div }
+                      , m_angle
+                      , WHITE);
+    
+    // DrawRectangleRec(m_hitBox, RED);
+}
 
 Rectangle Asteroid::getHitBox(){
     return m_hitBox;
