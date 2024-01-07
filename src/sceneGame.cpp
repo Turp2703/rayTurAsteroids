@@ -16,7 +16,6 @@ SceneGame::SceneGame(int p_screenWidth, int p_screenHeight)
     // Textures
     texShip = LoadTexture("assets/ship.png");
     texLaser = LoadTexture("assets/laser.png");
-    texShockwave = LoadTexture("assets/shockwave.png");
     texPortal = LoadTexture("assets/portal.png");
     texAsteroid = LoadTexture("assets/asteroid.png");
     texMetal = LoadTexture("assets/metal.png");
@@ -107,7 +106,7 @@ void SceneGame::draw(){
     for(auto& asteroid : asteroids)
         asteroid.draw(texAsteroid, texMetal, texShield);
     flameManager.draw(texFlames);
-    shockwaveManager.draw(texShockwave);
+    shockwaveManager.draw(texParticle);
     portalManager.draw(texPortal);
     player.draw(texShip);
     
@@ -140,7 +139,6 @@ void SceneGame::draw(){
 SceneGame::~SceneGame(){
     UnloadTexture(texShip);
     UnloadTexture(texLaser);
-    UnloadTexture(texShockwave);
     UnloadTexture(texPortal);
     UnloadTexture(texAsteroid);
     UnloadTexture(texMetal);

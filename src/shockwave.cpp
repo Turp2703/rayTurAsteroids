@@ -33,14 +33,25 @@ void Shockwave::update(){
     // Calculate life
     m_alive = GetTime() - m_startTime < k_lifeTime;
 }
+void Shockwave::update(std::vector<Particle> &p_particles){
+    // Particles
+    for(int i = 0; i < 8; i++){
+        p_particles.push_back(Particle(m_position
+                            , (float)GetRandomValue(30, 60) * i
+                            , 0.4f
+                            , (float)GetRandomValue(10, 15)
+                            , GetRandomValue(45, 90) / 10.f));
+    }
+    
+    // Calculate life
+    m_alive = GetTime() - m_startTime < k_lifeTime;
+}
 
 void Shockwave::draw(){
-    DrawCircleV(m_position, k_size, SKYBLUE);
-}
-void Shockwave::draw(Texture2D &p_texture){
-    //DrawCircleV(m_position, k_size, RED);
-    //DrawText(std::to_string(p_texture.width).c_str(), 10, 10, 20, WHITE);
-    DrawTextureEx(p_texture, {m_position.x - (p_texture.width * 6.5f) / 2, m_position.y - (p_texture.height * 6.5f) / 2}, 0.f, 6.5f , WHITE);
+    // DrawCircleV(m_position, k_size, SKYBLUE);
+    DrawCircleLines(m_position.x, m_position.y, k_size, GetRandomValue(0,1) ? SKYBLUE : BLUE);
+    // DrawCircleV(m_position, k_size, RED);
+    // DrawText(std::to_string(p_texture.width).c_str(), 10, 10, 20, WHITE);
 }
 
 bool Shockwave::isAlive(){

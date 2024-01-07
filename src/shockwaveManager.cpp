@@ -16,17 +16,28 @@ void ShockwaveManager::update(){
         if (!it->isAlive())
             it = m_shockwaves.erase(it);
         else {
-            it->update();
+            it->update(m_particles);
             it++;
         }
         
     for(int& charge : m_charges)
         if(charge < k_maxCharge)
             charge += k_chargeRecover;
+        
+    // Particles
+    for (auto it = m_particles.begin(); it != m_particles.end();){
+        if (!it->isAlive()){
+            it = m_particles.erase(it);
+        }
+        else {
+            it->update();
+            it++;
+        }
+    }
 }
 
 void ShockwaveManager::draw(){
-    for(Shockwave shockwave: m_shockwaves)
+    for(Shockwave& shockwave: m_shockwaves)
         shockwave.draw();
     
     // for(unsigned int i = 0; i < m_shockwaves.size(); i++)
@@ -34,9 +45,11 @@ void ShockwaveManager::draw(){
     // for(unsigned int i = 0; i < k_charges; i++)
         // DrawText(std::to_string(m_charges[i]).c_str(), 30, 20 * (i + 1), 20, WHITE);
 }
-void ShockwaveManager::draw(Texture2D& p_texture){
-    for(Shockwave shockwave: m_shockwaves)
-        shockwave.draw(p_texture);
+void ShockwaveManager::draw(Texture2D& p_particleTexture){
+    for(Shockwave& shockwave: m_shockwaves)
+        shockwave.draw();
+    for(auto& particle : m_particles)
+        particle.draw(p_particleTexture, GetRandomValue(0,1) ? SKYBLUE : BLUE, false);
 }
 void ShockwaveManager::drawIndicators(){
     for(int i = 0; i < k_charges; i++){
@@ -67,6 +80,7 @@ void ShockwaveManager::checkCollisions(std::vector<Asteroid>& p_asteroids){
 
 void ShockwaveManager::restart(){
     m_shockwaves.clear();
+    m_particles.clear();
     for(int i = 0; i < k_charges; i++)
         m_charges[i] = k_maxCharge;
 }

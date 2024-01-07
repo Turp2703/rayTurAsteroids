@@ -2,6 +2,7 @@
 
 #include "shockwave.h"
 #include "asteroid.h"
+#include "particle.h"
 
 #include "raylib.h"
 
@@ -23,4 +24,5 @@ class ShockwaveManager{
         const int k_chargeRecover = 25; // 25
         std::vector<Shockwave> m_shockwaves;
         int m_charges[3]; // 3
+        std::vector<Particle> m_particles;
 };

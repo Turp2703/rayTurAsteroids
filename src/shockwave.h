@@ -1,8 +1,11 @@
 #pragma once
 
 #include "projectile.h"
+#include "particle.h"
 
 #include "raylib.h"
+
+#include <vector>
 
 class Shockwave : public Projectile{
     public:
@@ -10,8 +13,8 @@ class Shockwave : public Projectile{
         Shockwave(const Shockwave&);
         Shockwave& operator=(Shockwave&&) noexcept;
         void update();
+        void update(std::vector<Particle>&);
         void draw();
-        void draw(Texture2D&);
         bool isAlive();
         Vector2 getPos();
         float getRadius();
