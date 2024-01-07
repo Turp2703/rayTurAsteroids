@@ -25,7 +25,7 @@ Ship::Ship(int p_screenWidth, int p_screenHeight
 }
 
 
-void Ship::update(){
+void Ship::update(Sound &p_soundLaser, Sound &p_soundFlames, Sound &p_soundShockwave){
     // Update Particles
     for (auto it = m_fireParticles.begin(); it != m_fireParticles.end();){
         if (!it->isAlive()){
@@ -112,14 +112,15 @@ void Ship::update(){
         // Attacks
         Vector2 origin = {m_position.x + cos(m_radAngle) * m_size*1.5f, m_position.y + sin(m_radAngle) * m_size*1.5f};
         if(IsKeyPressed(KEY_J)){
-            m_laserManager.spawnLaser(origin, m_radAngle, m_horizontalLimit, m_verticalLimit);
+            m_laserManager.spawnLaser(origin, m_radAngle, m_horizontalLimit, m_verticalLimit, p_soundLaser);
         }
         if(IsKeyDown(KEY_K)){
-            m_flameManager.spawnFlame(origin, m_radAngle, m_horizontalLimit, m_verticalLimit);
-            m_flameManager.spawnFlame(origin, m_radAngle, m_horizontalLimit, m_verticalLimit);
+            m_flameManager.spawnFlame(origin, m_radAngle, m_horizontalLimit, m_verticalLimit, p_soundFlames);
+            m_flameManager.spawnFlame(origin, m_radAngle, m_horizontalLimit, m_verticalLimit, p_soundFlames);
         }
-        if(IsKeyPressed(KEY_L))
-            m_shockwaveManager.spawnShockwave(m_position, m_horizontalLimit, m_verticalLimit);
+        if(IsKeyPressed(KEY_L)){
+            m_shockwaveManager.spawnShockwave(m_position, m_horizontalLimit, m_verticalLimit, p_soundShockwave);
+        }
     }
 }
 
@@ -177,11 +178,13 @@ void Ship::kill(){
     }
 }
 
-void Ship::checkCollisions(std::vector<Asteroid>& p_asteroids){
+void Ship::checkCollisions(std::vector<Asteroid>& p_asteroids, Sound &p_soundDeath){
     if(m_alive)
         for(auto& asteroid : p_asteroids)
-            if(asteroid.isAlive() && CheckCollisionCircleRec({m_hitBox.x, m_hitBox.y}, m_hitBox.z, asteroid.getHitBox()))
+            if(asteroid.isAlive() && CheckCollisionCircleRec({m_hitBox.x, m_hitBox.y}, m_hitBox.z, asteroid.getHitBox())){
+                PlaySound(p_soundDeath);
                 kill();
+            }
 }
 
 void Ship::restart(){

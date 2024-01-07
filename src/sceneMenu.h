@@ -16,4 +16,5 @@ class SceneMenu : public Scene{
         bool mouseOverButton;
         bool transitioning;
         unsigned char alpha;
+        Sound soundStart;
 };

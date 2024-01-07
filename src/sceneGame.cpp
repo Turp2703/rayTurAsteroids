@@ -26,21 +26,31 @@ SceneGame::SceneGame(int p_screenWidth, int p_screenHeight)
         texFlames[i] = LoadTexture(("assets/flame" + std::to_string(i + 1) + ".png").c_str());
     for(int i = 0; i < (int)(sizeof(texBackground) / sizeof (texBackground[0])); i++)
         texBackground[i] = LoadTexture(("assets/bg" + std::to_string(i + 1) + ".png").c_str());
+    
+    // Sounds
+    soundStart = LoadSound("assets/start.wav");
+    soundImpact = LoadSound("assets/impact.wav");
+    soundLaser = LoadSound("assets/laser.wav");
+    soundFlames = LoadSound("assets/flames.wav");
+    soundShockwave = LoadSound("assets/shockwave.wav");
+    soundDeath = LoadSound("assets/death.wav");
 }
 
 void SceneGame::update(Game* p_game){
-    player.update();
+    player.update(soundLaser, soundFlames, soundShockwave);
     laserManager.update();
     flameManager.update();
     shockwaveManager.update();
     for(auto& asteroid : asteroids)
         asteroid.update(score, m_asteroidParticles);
     for (auto it = asteroids.begin(); it != asteroids.end();)
-        if (!it->isAlive())
+        if (!it->isAlive()){
             it = asteroids.erase(it);
+            PlaySound(soundImpact);
+        }
         else
             it++;
-    player.checkCollisions(asteroids);
+    player.checkCollisions(asteroids, soundDeath);
     laserManager.checkCollisions(asteroids, score);
     flameManager.checkCollisions(asteroids);
     shockwaveManager.checkCollisions(asteroids);
@@ -61,6 +71,7 @@ void SceneGame::update(Game* p_game){
     // GAME OVER
     if(!player.isAlive()){
         if(IsKeyPressed(KEY_R)){
+            PlaySound(soundStart);
             asteroids.clear();
             player.restart();
             portalManager.restart();
@@ -139,4 +150,10 @@ SceneGame::~SceneGame(){
         UnloadTexture(texFlames[i]);
     for(int i = 0; i < (int)(sizeof(texBackground) / sizeof (texBackground[0])); i++)
         UnloadTexture(texBackground[i]);
+    UnloadSound(soundStart);
+    UnloadSound(soundImpact);
+    UnloadSound(soundLaser);
+    UnloadSound(soundFlames);
+    UnloadSound(soundShockwave);
+    UnloadSound(soundDeath);
 }

@@ -32,9 +32,11 @@ void LaserManager::draw(Texture2D &p_texture){
         laser.draw(p_texture);
 }
 
-void LaserManager::spawnLaser(Vector2 p_pos, float p_radAngle, int p_horLimit, int p_verLimit){
-    if(m_lasers.size() < 3)
+void LaserManager::spawnLaser(Vector2 p_pos, float p_radAngle, int p_horLimit, int p_verLimit, Sound &p_sound){
+    if(m_lasers.size() < 3){
         m_lasers.push_back(Laser(p_pos, p_radAngle, p_horLimit, p_verLimit));
+        PlaySound(p_sound);
+    }
 }
 
 void LaserManager::checkCollisions(std::vector<Asteroid>& p_asteroids, int& p_score){

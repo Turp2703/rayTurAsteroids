@@ -45,13 +45,13 @@ void ShockwaveManager::drawIndicators(){
     }
 }
 
-void ShockwaveManager::spawnShockwave(Vector2 p_pos, int p_horLimit, int p_verLimit){
-    
+void ShockwaveManager::spawnShockwave(Vector2 p_pos, int p_horLimit, int p_verLimit, Sound &p_sound){
     bool spawned = false;
     for(int i = 0; i < k_charges && !spawned; i++)
         if(m_charges[i] == k_maxCharge){
             m_shockwaves.push_back(Shockwave(p_pos, p_horLimit, p_verLimit));
             m_charges[i] = 0;
+            PlaySound(p_sound);
             spawned = true;
         }
 }

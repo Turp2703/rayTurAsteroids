@@ -15,6 +15,8 @@ SceneMenu::SceneMenu(int p_screenWidth, int p_screenHeight)
     mouseOverButton = false;
     transitioning = false;
     alpha = 0;
+    
+    soundStart = LoadSound("assets/start.wav"); 
 }
 
 void SceneMenu::update(Game* p_game){
@@ -27,8 +29,9 @@ void SceneMenu::update(Game* p_game){
         else
             p_game->changeScene(new SceneGame(m_screenWidth, m_screenHeight));
     }
-    else if(mouseOverButton && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+    else if((mouseOverButton && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) || IsKeyPressed(KEY_ENTER)){
         transitioning = true;
+        PlaySound(soundStart);
     }
 }
 
@@ -70,4 +73,5 @@ void SceneMenu::draw(){
 
 SceneMenu::~SceneMenu(){
     UnloadTexture(texLogo);
+    UnloadSound(soundStart);
 }

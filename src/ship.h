@@ -12,14 +12,14 @@
 class Ship{
     public:
         Ship(int, int, LaserManager&, FlameManager&, ShockwaveManager&);
-        void update();
+        void update(Sound&, Sound&, Sound&);
         void draw();
         void draw(Texture2D&);
         void drawEffects(Texture2D&);
         Vector3 getHitBox();
         bool isAlive();
         void kill();
-        void checkCollisions(std::vector<Asteroid>&);
+        void checkCollisions(std::vector<Asteroid>&, Sound&);
         void restart();
     private:
         const int k_maxSpeed = 5; // 5

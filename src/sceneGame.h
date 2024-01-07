@@ -39,5 +39,12 @@ class SceneGame : public Scene{
         Texture2D texBackground[7];
         Texture2D texParticle;
         
+        Sound soundStart;
+        Sound soundImpact;
+        Sound soundLaser;
+        Sound soundFlames;
+        Sound soundShockwave;
+        Sound soundDeath;
+        
         std::vector<Particle> m_asteroidParticles;
 };

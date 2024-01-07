@@ -22,6 +22,7 @@ void UpdateDrawFrame(void* arg){
 }
 void Game::init(const char* p_title){
     InitWindow(k_screenWidth, k_screenHeight, p_title);
+    InitAudioDevice();
 
     currentScene = new SceneMenu(k_screenWidth, k_screenHeight);
     // currentScene = new SceneGame(k_screenWidth, k_screenHeight);

@@ -48,8 +48,7 @@ void FlameManager::drawIndicators(){
     DrawRectangleLines(GetScreenWidth() - 30, GetScreenHeight() - 45, 20, 40, YELLOW);
 }
 
-void FlameManager::spawnFlame(Vector2 p_pos, float p_radAngle, int p_horLimit, int p_verLimit){
-    //////////////////////////////////////////// check time since last
+void FlameManager::spawnFlame(Vector2 p_pos, float p_radAngle, int p_horLimit, int p_verLimit, Sound &p_sound){
     if(m_charge > 0){
         float rndSpeed = GetRandomValue(k_minSpeed, k_maxSpeed);
         int degAngle = p_radAngle * RAD2DEG;
@@ -58,6 +57,8 @@ void FlameManager::spawnFlame(Vector2 p_pos, float p_radAngle, int p_horLimit, i
         m_flames.push_back(Flame(p_pos, rndAngle * DEG2RAD, rndSpeed, rndSize, p_horLimit, p_verLimit));
         m_charge -= k_chargeConsumption;
         m_lastTime = GetTime();
+        if(!IsSoundPlaying(p_sound))
+            PlaySound(p_sound);
     }
 }
 
